@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjana Sri Injamuri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{
+            --bg:#09090f;--bg2:#0f0f1a;--bg3:#14141f;
+            --line:#ffffff0f;--line2:#ffffff18;--line3:#ffffff28;
+            --text:#f0f0f8;--muted:#8888aa;
+            --accent: #fa9e6d;--accent2:#a594fb;--teal:#4ecdc4;
+            --serif:'DM Serif Display',serif;--mono:'DM Mono',monospace;--sans:'Outfit',sans-serif;
+        }
+        .light{
+            --bg:#f8f8fc;--bg2:#f0f0f8;--bg3:#e8e8f4;
+            --line:#00000010;--line2:#00000018;--line3:#00000025;
+            --text:#0a0a14;--muted:#555570;--accent:#5b4ef0;--accent2:#7c6dfa;--teal:#0e9e96;
+        }
+        html{scroll-behavior:smooth}
+        body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden;transition:background .3s,color .3s}
+
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:.5px solid var(--line);backdrop-filter:blur(14px);background:rgba(9,9,15,.82);transition:background .3s}
+        .light nav{background:rgba(248,248,252,.85)}
+        .nav-logo{font-family:var(--mono);font-size:13px;color:var(--accent2);letter-spacing:.05em;text-decoration:none}
+        .nav-right{display:flex;align-items:center;gap:1.8rem}
+        .nav-links{display:flex;gap:1.8rem}
+        .nav-links a{font-size:11.5px;font-weight:400;color:var(--muted);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+        .nav-links a:hover{color:var(--text)}
+        .toggle{cursor:pointer;background:var(--bg3);border:.5px solid var(--line2);border-radius:20px;padding:.3rem .75rem;font-family:var(--mono);font-size:11px;color:var(--muted);transition:all .2s}
+        .toggle:hover{color:var(--text);border-color:var(--accent)}
+
+        .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 2.5rem;padding-top:5rem;position:relative;overflow:hidden}
+        .grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px}
+        .glow1{position:absolute;top:15%;left:5%;width:600px;height:600px;background:radial-gradient(ellipse,rgba(124,109,250,.1) 0%,transparent 65%);pointer-events:none}
+        .glow2{position:absolute;bottom:5%;right:5%;width:400px;height:400px;background:radial-gradient(ellipse,rgba(78,205,196,.07) 0%,transparent 65%);pointer-events:none}
+        .hero-inner{position:relative;max-width:820px}
+        .hero-eyebrow{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.4rem;opacity:0;animation:up .5s .1s forwards}
+        .hero-h1{font-family:var(--serif);font-size:clamp(3.2rem,8vw,6.5rem);line-height:1.02;margin-bottom:1.4rem;opacity:0;animation:up .6s .25s forwards}
+        .hero-h1 em{font-style:italic;color:var(--accent2)}
+        .hero-sub{font-size:1rem;color:var(--muted);max-width:500px;line-height:1.85;margin-bottom:.8rem;opacity:0;animation:up .6s .4s forwards}
+        .hero-status{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:11px;color:var(--teal);margin-bottom:2.2rem;opacity:0;animation:up .6s .5s forwards}
+        .hero-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+        .hero-btns{display:flex;gap:.8rem;flex-wrap:wrap;opacity:0;animation:up .6s .6s forwards}
+        .btn{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1.3rem;font-size:13px;font-weight:500;border-radius:6px;text-decoration:none;transition:all .18s;letter-spacing:.02em;cursor:pointer;border:none;font-family:var(--sans)}
+        .btn-fill{background:var(--accent);color:#fff}
+        .btn-fill:hover{background:var(--accent2);transform:translateY(-2px)}
+        .btn-outline{border:.5px solid var(--line3);color:var(--muted);background:transparent}
+        .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+        section{padding:5.5rem 2.5rem;border-top:.5px solid var(--line)}
+        .sec-label{font-family:var(--mono);font-size:20px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2.5rem;display:flex;align-items:center;gap:1rem}
+        .sec-label::after{content:'';flex:1;height:.5px;background:var(--line2)}
+        .sec-h2{font-family:var(--serif);font-size:clamp(1.9rem,4vw,3rem);line-height:1.12;margin-bottom:1rem}
+
+        .about-grid{display:grid;grid-template-columns:3fr 2fr;gap:4rem;margin-top:1.5rem}
+        .about-p{color:var(--muted);font-size:.92rem;line-height:1.9;margin-bottom:1rem}
+        .about-p strong{color:var(--text);font-weight:500}
+        .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .scard{background:var(--bg3);border:.5px solid var(--line2);border-radius:10px;padding:1.3rem 1.4rem;transition:border-color .2s}
+        .scard:hover{border-color:var(--accent)}
+        .snum{font-family:var(--serif);font-size:2.4rem;color:var(--accent2);line-height:1}
+        .slabel{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:.35rem}
+
+        .skills-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin-top:1.5rem}
+        .sg{background:var(--bg3);border:.5px solid var(--line2);border-radius:10px;padding:1.3rem}
+        .sg-label{font-family:var(--mono);font-size:10.5px;color:var(--teal);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.8rem}
+        .tags{display:flex;flex-wrap:wrap;gap:.35rem}
+        .tag{font-family:var(--mono);font-size:11px;padding:.25rem .6rem;border-radius:4px;background:rgba(124,109,250,.1);color:var(--accent2)}
+
+        .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.3rem;margin-top:1.5rem}
+        .pc{background:var(--bg3);border:.5px solid var(--line2);border-radius:12px;padding:1.6rem;transition:border-color .2s,transform .2s;position:relative;overflow:hidden}
+        .pc::after{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,var(--accent),var(--teal));opacity:0;transition:opacity .2s}
+        .pc:hover{border-color:var(--accent);transform:translateY(-3px)}
+        .pc:hover::after{opacity:1}
+        .pc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem}
+        .pc-icon{width:36px;height:36px;border-radius:8px;background:rgba(124,109,250,.14);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+        .pc-launch{font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;padding:.25rem .6rem;border:.5px solid var(--line2);border-radius:4px;transition:all .18s}
+        .pc-launch:hover{color:var(--teal);border-color:var(--teal)}
+        .pc-title{font-weight:600;font-size:.92rem;margin-bottom:.4rem}
+        .pc-desc{font-size:.83rem;color:var(--muted);line-height:1.7;margin-bottom:.9rem}
+        .pc-tech{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.8rem}
+        .tt{font-family:var(--mono);font-size:10px;padding:.18rem .5rem;border-radius:3px;background:rgba(255,255,255,.04);color:var(--muted)}
+        .pc-stat{font-family:var(--mono);font-size:10.5px;color:var(--teal);padding-top:.8rem;border-top:.5px solid var(--line)}
+
+        .pub-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:1rem}
+        .pub{background:var(--bg3);border:.5px solid var(--line2);border-radius:10px;padding:1.5rem;display:grid;grid-template-columns:56px 1fr;gap:1.2rem}
+        .pub-yr{font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:.15rem;text-align:center}
+        .pub-title{font-weight:500;font-size:.92rem;margin-bottom:.3rem}
+        .pub-journal{font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:.4rem}
+        .pub-blurb{font-size:.81rem;color:var(--muted);line-height:1.6}
+
+        .exp-list{margin-top:1.5rem}
+        .ei{display:grid;grid-template-columns:150px 1fr;gap:2rem;padding:2rem 0;border-bottom:.5px solid var(--line)}
+        .ei:last-child{border-bottom:none}
+        .ei-date{font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.6}
+        .ei-title{font-weight:500;font-size:.92rem;margin-bottom:.2rem}
+        .ei-org{font-size:.8rem;color:var(--accent2);margin-bottom:.6rem}
+        .ei-bul{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+        .ei-bul li{font-size:.83rem;color:var(--muted);padding-left:.9rem;position:relative;line-height:1.6}
+        .ei-bul li::before{content:'—';position:absolute;left:0;color:var(--accent);font-size:.65rem;top:.32rem}
+
+        .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:1.5rem;align-items:start}
+        .contact-p{font-size:.9rem;color:var(--muted);line-height:1.85;margin-bottom:1rem}
+        .clinks{display:flex;flex-direction:column;gap:.8rem}
+        .cl{display:flex;align-items:center;gap:1rem;padding:.9rem 1.2rem;background:var(--bg3);border:.5px solid var(--line2);border-radius:8px;text-decoration:none;transition:border-color .2s,transform .18s}
+        .cl:hover{border-color:var(--accent);transform:translateX(4px)}
+        .cl-icon{width:30px;height:30px;border-radius:6px;background:rgba(124,109,250,.14);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--accent);flex-shrink:0}
+        .cl-main{font-size:.83rem;color:var(--text)}
+        .cl-sub{font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+
+        footer{padding:1.8rem 2.5rem;border-top:.5px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+        footer p{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+        .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s,transform .55s}
+        .reveal.on{opacity:1;transform:none}
+        @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="nav-logo" href="#">sanjana.dev</a>
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <button class="toggle" id="themeBtn">💡</button>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="grid-bg"></div>
+    <div class="glow1"></div>
+    <div class="glow2"></div>
+    <div class="hero-inner">
+        <div class="hero-eyebrow">MS CS · Northeastern · Boston, MA</div>
+        <h1 class="hero-h1">Sanjana Sri<br><em>Injamuri.</em></h1>
+        <p class="hero-sub">ML researcher and builder. I work at the intersection of healthcare AI, blockchain systems, and human-computer interaction — turning research into real products.</p>
+        <div class="hero-status">Open to fall 2026 co-op opportunities</div>
+        <div class="hero-btns">
+            <a href="#projects" class="btn btn-fill">View my work</a>
+            <a href="https://github.com/Sanjana-sun" class="btn btn-outline" target="_blank">GitHub ↗</a>
+            <a href="https://www.linkedin.com/in/sanjana-injamuri-1a6885249/" class="btn btn-outline" target="_blank">LinkedIn ↗</a>
+            <a href="mailto:SanjanaInjamuri13@gmail.com" class="btn btn-outline">Get in touch</a>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="sec-label">Things you might wanna know about me</div>
+    <div class="about-grid reveal">
+        <div>
+            <h2 class="sec-h2">I build things that<br><em style="font-family:var(--serif);color:var(--accent2)">actually ship.</em></h2>
+            <p class="about-p" style="margin-top:1rem">First-year MS CS student at <strong>Northeastern University's Khoury College</strong>. Before that, two years leading ML/AI workshops at Anurag University — mentoring 30+ students and publishing peer-reviewed research on gesture recognition and NLP.</p>
+            <p class="about-p">Right now I'm building <strong>DocLink</strong>, a blockchain-verified doctor collaboration platform actively used by medical professionals in India. Working toward company registration under Sunveda Technologies.</p>
+            <p class="about-p">I care about systems that work reliably, interfaces that don't get in the way, and research that actually makes it out of the lab.</p>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <div class="sec-label">Skills</div>
+    <h2 class="sec-h2 reveal">What I work with</h2>
+    <div class="skills-wrap reveal">
+        <div class="sg"><div class="sg-label">ML / AI</div><div class="tags"><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">BERT</span><span class="tag">DistilBERT</span><span class="tag">YOLO</span><span class="tag">OpenCV</span><span class="tag">Qiskit</span><span class="tag">HuggingFace</span><span class="tag">scikit-learn</span></div></div>
+        <div class="sg"><div class="sg-label">Full-stack</div><div class="tags"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Prisma</span><span class="tag">Redux</span><span class="tag">Flask</span><span class="tag">REST APIs</span></div></div>
+        <div class="sg"><div class="sg-label">Infrastructure</div><div class="tags"><span class="tag">AWS</span><span class="tag">Docker</span><span class="tag">Git</span><span class="tag">MongoDB</span><span class="tag">MySQL</span><span class="tag">BigQuery</span><span class="tag">Elasticsearch</span></div></div>
+        <div class="sg"><div class="sg-label">Languages</div><div class="tags"><span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">C/C++</span><span class="tag">Java</span><span class="tag">Solidity</span><span class="tag">R</span><span class="tag">Bash</span></div></div>
+        <div class="sg"><div class="sg-label">Security</div><div class="tags"><span class="tag">AES-256-GCM</span><span class="tag">2FA</span><span class="tag">libsodium</span><span class="tag">Rate limiting</span><span class="tag">Session hardening</span></div></div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="sec-label">Projects</div>
+    <h2 class="sec-h2 reveal">My Creations</h2>
+    <div class="proj-grid reveal">
+        <div class="pc">
+            <div class="pc-head"><div class="pc-icon">1</div><span class="pc-launch">Production</span></div>
+            <div class="pc-title">DocLink</div>
+            <div class="pc-desc">Blockchain-verified doctor collaboration platform. Encrypted records, real-time data, full auth system. Actively used by medical professionals in India.</div>
+            <div class="pc-tech"><span class="tt">Node.js</span><span class="tt">Express</span><span class="tt">Prisma</span><span class="tt">React</span><span class="tt">Blockchain</span><span class="tt">AES-256-GCM</span></div>
+            <div class="pc-stat">→ Real users · Company in formation</div>
+        </div>
+        <div class="pc">
+            <div class="pc-head"><div class="pc-icon">2</div><span class="pc-launch">Research</span></div>
+            <div class="pc-title">BCI Neural Text Generator</div>
+            <div class="pc-desc">AI model generating text from BCI-inspired cognitive states — focused, creative, distracted. Targets mental health and HCI applications.</div>
+            <div class="pc-tech"><span class="tt">Python</span><span class="tt">PyTorch</span><span class="tt">DistilBERT</span></div>
+            <div class="pc-stat">→ 75% state classification accuracy</div>
+        </div>
+        <div class="pc">
+            <div class="pc-head"><div class="pc-icon">3</div><span class="pc-launch">Shipped</span></div>
+            <div class="pc-title">Quantum Trading Simulator</div>
+            <div class="pc-desc">Trading tool combining X/Twitter sentiment analysis with quantum annealing portfolio optimization and real-time market data.</div>
+            <div class="pc-tech"><span class="tt">Python</span><span class="tt">PyTorch</span><span class="tt">Qiskit</span></div>
+            <div class="pc-stat">→ 87% sentiment accuracy · 25% faster rebalancing</div>
+        </div>
+        <div class="pc">
+            <div class="pc-head"><div class="pc-icon">4</div><span class="pc-launch">Shipped</span></div>
+            <div class="pc-title">Healthcare Chatbot</div>
+            <div class="pc-desc">Medical image classifier detecting breast cancer, brain tumors, and kidney stones via Telegram. Integrates BERT for conversational follow-up.</div>
+            <div class="pc-tech"><span class="tt">Python</span><span class="tt">YOLO</span><span class="tt">BERT</span></div>
+            <div class="pc-stat">→ 92% classification accuracy</div>
+        </div>
+        <div class="pc">
+            <div class="pc-head"><div class="pc-icon">5</div><span class="pc-launch">1st place</span></div>
+            <div class="pc-title">Hand Gesture Canvas</div>
+            <div class="pc-desc">Real-time vision system for hand gesture-driven virtual drawing. Built for HCI and accessibility. Won 1st place at TEJAS 2K24.</div>
+            <div class="pc-tech"><span class="tt">Python</span><span class="tt">PyTorch</span><span class="tt">OpenCV</span></div>
+            <div class="pc-stat">→ 92% accuracy · TEJAS 2K24 winner</div>
+        </div>
+        <div class="pc">
+            <div class="pc-head"><div class="pc-icon">6</div><span class="pc-launch">Published</span></div>
+            <div class="pc-title">Publication Summary Generator</div>
+            <div class="pc-desc">BERT-based tool generating structured summaries of academic papers from metadata. Built for researchers to cut down literature review time.</div>
+            <div class="pc-tech"><span class="tt">React</span><span class="tt">Flask</span><span class="tt">BERT</span><span class="tt">Python</span></div>
+            <div class="pc-stat">→ 40% improvement in research efficiency</div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="sec-label">Let's Talk</div>
+    <div class="contact-inner reveal">
+        <div>
+            <h2 class="sec-h2">Let's work<br><em style="font-family:var(--serif);font-style:italic;color:var(--accent2)">together.</em></h2>
+            <p class="contact-p" style="margin-top:1rem">I'm actively looking for fall 2026 co-op opportunities in ML engineering, AI research, and SWE. Open to remote and Boston-area roles.</p>
+            <p class="contact-p">Building something interesting in healthcare AI, LLMs, or systems? I'd love to hear from you.</p>
+        </div>
+        <div class="clinks">
+            <a href="mailto:SanjanaInjamuri13@gmail.com" class="cl">
+                <div class="cl-icon">@</div>
+                <div><div class="cl-main">SanjanaInjamuri13@gmail.com</div><div class="cl-sub">email</div></div>
+            </a>
+            <a href="https://www.linkedin.com/in/sanjana-injamuri-1a6885249/" class="cl" target="_blank">
+                <div class="cl-icon">in</div>
+                <div><div class="cl-main">sanjana-injamuri-1a6885249</div><div class="cl-sub">linkedin</div></div>
+            </a>
+            <a href="https://github.com/Sanjana-sun" class="cl" target="_blank">
+                <div class="cl-icon">gh</div>
+                <div><div class="cl-main">github.com/Sanjana-sun</div><div class="cl-sub">github</div></div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Sanjana Sri Injamuri</p>
+    <p>MS CS · Northeastern · Boston, MA</p>
+</footer>
+
+<script>
+    const btn = document.getElementById('themeBtn');
+    let light = false;
+    btn.addEventListener('click', () => {
+        light = !light;
+        document.body.classList.toggle('light', light);
+        btn.textContent = '💡';
+    });
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
