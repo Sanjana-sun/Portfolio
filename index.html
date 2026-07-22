@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio</title>
+    <title>Sanjana Injamuri — Portfolio</title>
+    <meta name="description" content="Sanjana Sri Injamuri — MS CS student at Northeastern Khoury College, building secure full-stack systems (DocLink, MedLink) and exploring computational neuroscience." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Sanjana Injamuri — Portfolio" />
+    <meta property="og:description" content="MS CS student at Northeastern Khoury College, building secure full-stack systems (DocLink, MedLink) and exploring computational neuroscience." />
+    <meta property="og:url" content="https://sanjanainjamuri.com" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Sanjana Injamuri — Portfolio" />
+    <meta name="twitter:description" content="MS CS student at Northeastern Khoury College, building secure full-stack systems (DocLink, MedLink) and exploring computational neuroscience." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%230A0B0D'/><text x='32' y='45' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23AEB7C4' text-anchor='middle'>S</text></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -136,11 +145,28 @@
         }
         body.live .pill{opacity:1;transform:none}
         .pill a{font-size:13.5px;font-weight:600;text-decoration:none;color:var(--muted);
-            padding:8px 16px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s}
+            padding:8px 16px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s;flex:none}
         .pill a:hover{color:var(--ink);background:var(--card-hi)}
         .pill a.brand{color:var(--ink);font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.02em}
         .pill a.brand i{font-style:normal;color:var(--steel)}
-        @media(max-width:640px){.pill a:not(.brand){display:none}}
+        .menu-btn{display:none}
+        @media(max-width:640px){
+            .pill a:not(.brand){display:none}
+            .menu-btn{
+                display:grid;place-items:center;cursor:pointer;border:1px solid var(--border);
+                background:var(--card);color:var(--ink);border-radius:999px;width:36px;height:36px;
+                font-size:15px;margin-left:6px;flex:none;
+            }
+        }
+        .mobile-nav{
+            position:fixed;top:70px;left:16px;right:16px;z-index:99;
+            background:var(--card);border:1px solid var(--border);border-radius:20px;padding:8px;
+            display:none;flex-direction:column;gap:2px;box-shadow:var(--glow),var(--bevel);
+            opacity:0;transform:translateY(-10px);transition:opacity .25s,transform .25s;
+        }
+        .mobile-nav.open{display:flex;opacity:1;transform:none}
+        .mobile-nav a{padding:13px 18px;border-radius:13px;color:var(--muted);text-decoration:none;font-weight:600;font-size:15px}
+        .mobile-nav a:hover{background:var(--card-hi);color:var(--ink)}
         .theme-btn{
             cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--ink);border-radius:999px;
             width:36px;height:36px;display:grid;place-items:center;font-size:15px;margin-left:6px;
@@ -165,7 +191,7 @@
         body.live .hero h1 .w>span{transform:none}
         .rotator{
             margin-top:30px;font-family:var(--mono);font-size:clamp(14px,1.8vw,17px);color:var(--muted);
-            display:flex;align-items:baseline;gap:12px;
+            display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
             opacity:0;transition:opacity .8s .7s;
         }
         body.live .rotator{opacity:1}
@@ -382,6 +408,7 @@
 <div id="cursor-glow" aria-hidden="true"></div>
 
 <header class="top"><nav class="pill" id="nav"></nav></header>
+<nav class="mobile-nav" id="mobileNav"></nav>
 
 <div class="hero wrap" id="top">
     <div class="eyebrow" id="badge-text"></div>
@@ -416,19 +443,20 @@
         name: "Sanjana",
         brand: "Sanjana",
         pageTitle: "Sanjana Injamuri — Portfolio",
-        introSub: "ml engineering · neuroai · full-stack",   // line under the name on the intro screen
+        introSub: "full-stack · security · applied ml",   // line under the name on the intro screen
         badge: "Open to opportunities",
-        heroTitle: "Building at the edge of AI and neuroscience.",
+        heroTitle: "Building secure, full-stack systems.",
         rotatorPrefix: "Currently:",
         rotatorWords: [                                    // cycles in the hero
             "building DocLink",
-            "studying computational neuroscience",
-            "researching NeuroAI",
+            "building MedLink",
             "TA-ing algorithms at Northeastern",
+            "studying computational neuroscience",
         ],
-        tickerWords: ["Machine Learning","Neuroscience","Full-Stack","Security","Blockchain","Algorithms","Cloud","Research"],
+        tickerWords: ["Full-Stack","Security","Cryptography","Machine Learning","Cloud","Algorithms","Research"],
         heroLinks: [
             { label:"View projects", url:"#projects", primary:true },
+            { label:"Résumé ↓",      url:"Sanjana_Injamuri_Resume.pdf" },
             { label:"GitHub ↗",      url:"https://github.com/Sanjana-sun" },
             { label:"LinkedIn ↗",    url:"https://linkedin.com/in/sanjanainjamuri/" },
         ],
@@ -436,7 +464,7 @@
         /* ————— nav (keep it minimal) —————
            Options: "about","skills","building","projects","experience",
            "publications","achievements","beyond". Contact is always appended. */
-        navSections: ["about","skills","projects","experience","achievements"],
+        navSections: ["about","skills","projects","experience","publications","achievements"],
 
         /* ————— sections ————— */
         sections: {
@@ -445,13 +473,14 @@
                 enabled:true, navLabel:"About",
                 title:"About me",
                 paragraphs: [
-                    "MS Computer Science student at <strong>Northeastern University's Khoury College</strong>, focused on ML engineering and AI research, graduating May 2027.",
-                    "Currently deepening my grounding in <strong>computational neuroscience</strong> through Neuromatch Academy, working at the intersection of NeuroAI and computational neuroscience.",
+                    "MS Computer Science student at <strong>Northeastern University's Khoury College</strong>, expected December 2027 — following a B.Tech in Computer Science from Anurag University (2025).",
+                    "Founder & full-stack developer of <strong>DocLink</strong>, a blockchain-verified doctor collaboration platform built end-to-end with React/Vite, Node/Express/Prisma/PostgreSQL, and libsodium/Argon2 encryption for secure medical communications.",
+                    "Also exploring <strong>computational neuroscience</strong> through Neuromatch Academy, working with neural data analysis and computational modeling.",
                 ],
                 facts: [
                     { k:"Currently", v:"MS CS · Northeastern Khoury College" },
-                    { k:"Grad date", v:"May 2027" },
-                    { k:"Focus",     v:"ML Engineering & NeuroAI" },
+                    { k:"Grad date", v:"Expected Dec 2027" },
+                    { k:"Focus",     v:"Full-Stack Engineering & Security" },
                     { k:"Open to",   v:"Research · Co-op opportunities" },
                 ],
             },
@@ -464,26 +493,25 @@
                     { name:"Languages", items:[
                             { name:"JavaScript / TS", level:4 },
                             { name:"Python",          level:4 },
-                            { name:"SQL",             level:3 },
+                            { name:"Java",            level:3 },
                             { name:"Go",              level:2 },
                         ]},
-                    { name:"Backend", items:[
+                    { name:"Frameworks & Tools", items:[
+                            { name:"React / Vite",    level:4 },
                             { name:"Node.js / Express", level:4 },
-                            { name:"Prisma ORM",  level:3 },
-                            { name:"REST APIs",   level:4 },
-                            { name:"Cryptography (libsodium)", level:3 },
+                            { name:"Prisma ORM",      level:4 },
+                            { name:"Git",             level:4 },
                         ]},
-                    { name:"Data & Infra", items:[
-                            { name:"PostgreSQL",  level:4 },
-                            { name:"React / Vite",level:4 },
-                            { name:"Vercel / Railway", level:3 },
-                            { name:"Docker",      level:2 },
+                    { name:"Cloud & Data", items:[
+                            { name:"PostgreSQL",      level:4 },
+                            { name:"AWS",             level:3 },
+                            { name:"Vercel / Railway",level:3 },
                         ]},
-                    { name:"ML & Cloud", items:[
-                            { name:"scikit-learn", level:3 },
-                            { name:"AWS",         level:3 },
-                            { name:"Cybersecurity", level:3 },
-                            { name:"Kubernetes",  level:1 },
+                    { name:"ML & Security", items:[
+                            { name:"PyTorch / TensorFlow", level:3 },
+                            { name:"scikit-learn",    level:3 },
+                            { name:"BERT/DistilBERT & YOLO", level:3 },
+                            { name:"Cryptography (libsodium, Ed25519)", level:4 },
                         ]},
                 ],
             },
@@ -492,11 +520,12 @@
                 enabled:true, navLabel:"Now",
                 title:"Currently building",
                 items: [
-                    { name:"DocLink", eta:"Actively developing", progress:70,
-                        desc:"Blockchain-verified doctor collaboration platform with E2E encryption, honeypot-based intrusion logging, steganographic watermarking, and behavioral tracking across every major action.",
+                    { name:"DocLink", eta:"Founder & Full-Stack Developer · Actively developing", progress:75,
+                        desc:"Blockchain-verified doctor collaboration platform built end-to-end with React/Vite (Vercel) and Node/Express/Prisma/PostgreSQL (Railway), with libsodium/Argon2 end-to-end encryption for sensitive medical communications.",
                         link:"https://doclink.in", linkLabel:"Visit DocLink ↗" },
-                    { name:"Computational Neuroscience (Neuromatch Academy)", eta:"Starting July 2026", progress:15,
-                        desc:"Working at the intersection of NeuroAI and computational neuroscience." },
+                    { name:"MedLink (DocLink Student Platform)", eta:"Actively developing", progress:55,
+                        desc:"Student-facing companion to DocLink, served at doclink.in/students via path-based Vercel routing, sharing the same backend and PostgreSQL database as an independent React + Vite frontend.",
+                        link:"https://github.com/Sanjana-sun/medlink-frontend", linkLabel:"View code ↗" },
                 ],
             },
 
@@ -505,14 +534,17 @@
                 title:"Projects",
                 items: [
                     { category:"Security", title:"DocLink",
-                        desc:"Blockchain-verified doctor collaboration platform with E2E encryption (libsodium/Argon2), honeypot-based intrusion detection, and steganographic watermarking.",
-                        tags:["React","Vite","Node.js","Prisma","PostgreSQL"], links:[{label:"Visit ↗",url:"https://doclink.in"}] },
-                    { category:"Security", title:"Real-time DDoS detection",
-                        desc:"Compared exact vs. probabilistic data structures — Bloom Filter, Count-Min Sketch, HyperLogLog, Misra-Gries — on NASA and CIC-DDoS2019 datasets, with full benchmark reporting.",
-                        tags:["Python","Data Structures","Benchmarking"], links:[] },
-                    { category:"Web", title:"Unified patient health records",
-                        desc:"Full-stack scaffold for a unified patient health records system, built end-to-end from schema design to UI.",
-                        tags:["React","Node.js","PostgreSQL"], links:[] },
+                        desc:"Blockchain-verified doctor collaboration platform, built end-to-end using React + Vite (Vercel) and Node.js + Express + Prisma + PostgreSQL (Railway), with libsodium/Argon2 end-to-end encryption for sensitive medical communications.",
+                        tags:["React","Vite","Node.js","Prisma","PostgreSQL"], links:[{label:"Visit ↗",url:"https://doclink.in"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/Doclink"}] },
+                    { category:"Security", title:"Selective-Disclosure Identity Wallet",
+                        desc:"Privacy-preserving verification protocol using Ed25519 signatures and HKDF-based key derivation, letting sites verify one attribute without exposing personal data. A separate cryptographic key per relying party keeps identities unlinkable across sites, confirmed with automated tests covering tamper detection, replay attacks, and duplicate-signup prevention.",
+                        tags:["Cryptography","Ed25519","HKDF"], links:[{label:"Code ↗",url:"https://github.com/Sanjana-sun/identity-wallet"}] },
+                    { category:"Web", title:"MedLink (DocLink Student Platform)",
+                        desc:"Student-facing companion platform to DocLink, served at doclink.in/students via path-based Vercel routing while sharing the same backend and PostgreSQL database — an independent React + Vite frontend with basename-scoped routing so students and doctors share cases without a duplicated codebase.",
+                        tags:["React","Vite","React Router","PostgreSQL"], links:[{label:"Code ↗",url:"https://github.com/Sanjana-sun/medlink-frontend"}] },
+                    { category:"Security", title:"Real-Time DDoS Detection for IoT Edge Devices",
+                        desc:"Probabilistic streaming pipeline (Bloom filter, Count-Min Sketch, HyperLogLog, Misra-Gries) for real-time DDoS detection on memory-constrained IoT devices, replacing an O(n) exact-counting baseline with fixed-memory approximation.",
+                        tags:["Python","Data Structures","IoT"], links:[{label:"Code ↗",url:"https://github.com/Sanjana-sun/ddos-detection"}] },
                 ],
             },
 
@@ -520,27 +552,40 @@
                 enabled:true, navLabel:"Work",
                 title:"Work experience",
                 items: [
-
-                    { time:"2025 — 2026", role:"Teaching Assistant", org:"Northeastern University · CS 5800 Algorithms",
-                        summary:"Course staff for graduate Algorithms under Prof. Pavlu.",
-                      },
+                    { time:"Present", role:"Teaching Assistant", org:"Northeastern University · CS 5800 Algorithms",
+                        summary:"Work extensively with core algorithmic paradigms and engage deeply with algorithm design and analysis." },
+                    { time:"2026", role:"Computational Neuroscience", org:"Neuromatch Academy",
+                        summary:"Worked extensively with neural data analysis and computational modeling techniques as part of an intensive, research-oriented curriculum in computational neuroscience." },
+                    { time:"2025", role:"Member", org:"AI/ML & IoT Clubs",
+                        summary:"Dove deeply into prototyping and deployment workflows across ML and IoT projects, spanning applied AI techniques, project development, and hardware-software integration." },
                 ],
             },
 
             publications: {
-                enabled:false, navLabel:"Papers",
+                enabled:true, navLabel:"Papers",
                 title:"Publications & reports",
-                items: [],
+                items: [
+                    { year:"2024", title:"Gesture-Based Control System",
+                        venue:"Developed a real-time hand gesture recognition system using Python, PyTorch, and OpenCV, achieving 95% accuracy in controlling interactive interfaces for HCI and healthcare applications.",
+                        url:"https://journaleims.com/gesture-based-control-system/" },
+                    { year:"2025", title:"Publication Summary Generator for Academicians",
+                        venue:"Built a BERT-based tool to generate academic summaries, improving research efficiency by 40%. Paper ID: 2025011115",
+                        url:"https://github.com/Sanjana-sun/Publication_Summary_Generator" },
+                ],
             },
 
             achievements: {
                 enabled:true, navLabel:"Achievements",
                 title:"Achievements & certifications",
                 items: [
-                    { when:"2026", title:"AWS Developer Associate", note:"Certified on core AWS development services." },
-                    { when:"2026", title:"Google Cybersecurity", note:"Professional certificate in cybersecurity fundamentals." },
-                    { when:"2026", title:"Go, AWS ML Foundations & Fortinet NSE 1–3", note:"Cluster of certifications completed alongside coursework." },
-                    { when:"Earlier", title:"Peer-reviewed publications", note:"Gesture recognition and NLP research during undergrad at Anurag University." },
+                    { when:"2026", title:"Fortinet Certified Associate Cybersecurity", note:"Certification in cybersecurity fundamentals." },
+                    { when:"2025", title:"Full-Stack Engineer", note:"Professional certificate by Skillsoft." },
+                    { when:"2025", title:"Machine Learning Crash Course", note:"Completed Google's ML Crash Course." },
+                    { when:"2024", title:"Google Cybersecurity", note:"Professional certificate in cybersecurity fundamentals." },
+                    { when:"2024", title:"TEJAS 2K24", note:"First position for designing a Hand Gestures-based Virtual Canvas." },
+                    { when:"2023", title:"AI MED QUEST", note:"First prize for creating a tumor-detecting chatbot." },
+                    { when:"2023", title:"3D Gaming Boot Camp", note:"Second place for developing a first-person shooter game." },
+                    { when:"2022", title:"IoT Hackathon", note:"Won by developing an innovative IoT application for agriculture." },
                 ],
             },
 
@@ -548,8 +593,8 @@
                 enabled:true, navLabel:"Beyond",
                 title:"Beyond tech",
                 items: [
-                    {  title:"Music",  note:"Indie pop, dark R&B, and South Indian indie" },
-                    {  title:"NeuroAI", note:"Reading up on the intersection of brains and machine learning." },
+                    { emoji:"🎧", title:"Music",  note:"Indie pop, dark R&B, and South Indian indie" },
+                    { emoji:"🧠", title:"NeuroAI", note:"Reading up on the intersection of brains and machine learning." },
                 ],
             },
         },
@@ -557,14 +602,14 @@
         /* ————— contact / footer ————— */
         contact: {
             megaText:"Let's build something.",
-            megaLink:"sanjanainjamuri13@gmail,com",
+            megaLink:"mailto:sanjanainjamuri13@gmail.com",
             socials: [
-                { label:"Email",      url:"sanjanainjamuri13@gmail.com", primary:true },
+                { label:"Email",      url:"mailto:sanjanainjamuri13@gmail.com", primary:true },
                 { label:"GitHub ↗",   url:"https://github.com/Sanjana-sun" },
                 { label:"LinkedIn ↗", url:"https://linkedin.com/in/sanjanainjamuri/" },
             ],
             colophonLeft:"© 2026 Sanjana Sri Injamuri",
-            colophonRight:"Curiosity, code & neuroscience",
+            colophonRight:"Full-stack, security & curiosity",
         },
     };
 
@@ -722,6 +767,8 @@
     /* rotating word */
     (function(){
         const box=$('rot');
+        const longest=Math.max(...CONTENT.rotatorWords.map(w=>w.length));
+        box.style.minWidth=(longest+1)+'ch';
         const spans=CONTENT.rotatorWords.map(w=>{const s=el('span',null,esc(w));box.appendChild(s);return s;});
         let i=0;spans[0].classList.add('on');
         if(reduced||spans.length<2)return;
@@ -842,7 +889,7 @@
             d.appendChild(el('h3',null,esc(p.title)));
             d.appendChild(el('div','venue',esc(p.venue)));
             r.appendChild(d);
-            if(p.url&&p.url!=='#'){const a=el('a',null,'Read ↗');a.href=p.url;a.target='_blank';a.rel='noopener';r.appendChild(a)}
+            if(p.url&&p.url!=='#'){const a=el('a',null,'View ↗');a.href=p.url;a.target='_blank';a.rel='noopener';r.appendChild(a)}
             else r.appendChild(el('span'));
             card.appendChild(r);
         });
@@ -877,15 +924,31 @@
     (function(){
         const n=$('nav');
         const brand=el('a','brand',`${esc(CONTENT.brand)}<i>.</i>`);brand.href='#top';n.appendChild(brand);
+        const links=[];
         (CONTENT.navSections||[]).forEach(id=>{
             const cfg=S[id];if(!cfg||cfg.enabled===false||!document.getElementById(id))return;
-            const a=el('a',null,esc(cfg.navLabel));a.href='#'+id;n.appendChild(a);
+            links.push({href:'#'+id,label:cfg.navLabel});
         });
-        const c=el('a',null,'Contact');c.href='#contact';n.appendChild(c);
+        links.push({href:'#contact',label:'Contact'});
+        links.forEach(l=>{const a=el('a',null,esc(l.label));a.href=l.href;n.appendChild(a)});
+
         const btn=el('button','theme-btn');btn.setAttribute('aria-label','Toggle light / dark mode');
         const sync=()=>btn.textContent=root.dataset.theme==='dark'?'☀️':'🌙';
         btn.addEventListener('click',()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';sync()});
         sync();n.appendChild(btn);
+
+        /* mobile dropdown — swaps in below 640px instead of a scrollable strip,
+           since a horizontally-scrollable row of tap targets is unreliable on touch. */
+        const menuBtn=el('button','menu-btn','☰');menuBtn.setAttribute('aria-label','Open menu');
+        n.appendChild(menuBtn);
+        const mnav=$('mobileNav');
+        links.forEach(l=>{const a=el('a',null,esc(l.label));a.href=l.href;
+            a.addEventListener('click',()=>mnav.classList.remove('open'));mnav.appendChild(a)});
+        menuBtn.addEventListener('click',()=>mnav.classList.toggle('open'));
+        document.addEventListener('click',e=>{
+            if(mnav.classList.contains('open')&&!mnav.contains(e.target)&&!menuBtn.contains(e.target))
+                mnav.classList.remove('open');
+        });
     })();
 
     /* scroll reveals + stagger + progress bars */
