@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+        try{const t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+    </script>
     <title>Sanjana Injamuri — Portfolio</title>
     <meta name="description" content="Sanjana Sri Injamuri — MS CS student at Northeastern Khoury College, building secure full-stack systems (DocLink, MedLink) and exploring computational neuroscience." />
     <meta property="og:type" content="website" />
@@ -103,7 +106,6 @@
             transition:opacity .9s ease,visibility .9s;
         }
         #intro.gone{opacity:0;visibility:hidden;pointer-events:none}
-        #intro canvas{position:absolute;inset:0;width:100%;height:100%}
         .intro-txt{position:relative;text-align:center;z-index:2;pointer-events:none}
         .intro-txt h1{
             font-family:var(--display);font-weight:800;letter-spacing:.32em;text-indent:.32em;
@@ -354,6 +356,10 @@
         .pub a{font-size:13.5px;font-weight:700;color:var(--steel);text-decoration:none;white-space:nowrap}
 
         /* achievements */
+        .ach-group{margin-bottom:28px}
+        .ach-group:last-child{margin-bottom:0}
+        .ach-group h3{font-family:var(--display);font-size:13px;font-weight:700;letter-spacing:.12em;
+            text-transform:uppercase;color:var(--faint);margin-bottom:14px}
         .ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
         .ach{padding:26px}
         .ach::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--steel),transparent)}
@@ -395,7 +401,6 @@
 
 <!-- ════ INTRO OVERLAY — animated neural sketch ════ -->
 <div id="intro" aria-hidden="true">
-    <canvas id="intro-canvas"></canvas>
     <div class="intro-txt">
         <h1 id="intro-name"></h1>
         <div class="rule"></div>
@@ -578,14 +583,14 @@
                 enabled:true, navLabel:"Achievements",
                 title:"Achievements & certifications",
                 items: [
-                    { when:"2026", title:"Fortinet Certified Associate Cybersecurity", note:"Certification in cybersecurity fundamentals." },
-                    { when:"2025", title:"Full-Stack Engineer", note:"Professional certificate by Skillsoft." },
-                    { when:"2025", title:"Machine Learning Crash Course", note:"Completed Google's ML Crash Course." },
-                    { when:"2024", title:"Google Cybersecurity", note:"Professional certificate in cybersecurity fundamentals." },
-                    { when:"2024", title:"TEJAS 2K24", note:"First position for designing a Hand Gestures-based Virtual Canvas." },
-                    { when:"2023", title:"AI MED QUEST", note:"First prize for creating a tumor-detecting chatbot." },
-                    { when:"2023", title:"3D Gaming Boot Camp", note:"Second place for developing a first-person shooter game." },
-                    { when:"2022", title:"IoT Hackathon", note:"Won by developing an innovative IoT application for agriculture." },
+                    { group:"Certifications", when:"2026", title:"Fortinet Certified Associate Cybersecurity", note:"Certification in cybersecurity fundamentals." },
+                    { group:"Certifications", when:"2025", title:"Full-Stack Engineer", note:"Professional certificate by Skillsoft." },
+                    { group:"Certifications", when:"2025", title:"Machine Learning Crash Course", note:"Completed Google's ML Crash Course." },
+                    { group:"Certifications", when:"2024", title:"Google Cybersecurity", note:"Professional certificate in cybersecurity fundamentals." },
+                    { group:"Awards", when:"2024", title:"TEJAS 2K24", note:"First position for designing a Hand Gestures-based Virtual Canvas." },
+                    { group:"Awards", when:"2023", title:"AI MED QUEST", note:"First prize for creating a tumor-detecting chatbot." },
+                    { group:"Awards", when:"2023", title:"3D Gaming Boot Camp", note:"Second place for developing a first-person shooter game." },
+                    { group:"Awards", when:"2022", title:"IoT Hackathon", note:"Won by developing an innovative IoT application for agriculture." },
                 ],
             },
 
@@ -625,99 +630,29 @@
 
     document.title=CONTENT.pageTitle;
 
-    /* ════ INTRO — animated neural sketch ════ */
+    /* ════ INTRO — minimal text reveal ════ */
     (function(){
         const intro=$('intro');
         $('intro-name').textContent=CONTENT.name.toUpperCase();
         $('intro-sub').textContent=CONTENT.introSub;
-        if(reduced){intro.remove();document.body.classList.add('live');return;}
+        let seen=false;try{seen=localStorage.getItem('introSeen')==='1';}catch(e){}
+        /* Skip the intro for repeat visitors and reduced-motion users. */
+        if(reduced||seen){intro.remove();document.body.classList.add('live');return;}
 
-        const cv=$('intro-canvas'),ctx=cv.getContext('2d');
-        let W,H,DPR;
-        function size(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;
-            cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}
-        size();addEventListener('resize',size);
-
-        /* two overlapping lobes of nodes — a rough hemisphere sketch */
-        const nodes=[],edges=[],labels=CONTENT.tickerWords.slice(0,6);
-        const cx=W/2,cy=H/2,R=Math.min(W,H)*0.30;
-        function lobe(ox,n){
-            for(let i=0;i<n;i++){
-                const a=Math.random()*Math.PI*2,r=Math.sqrt(Math.random())*R;
-                nodes.push({x:cx+ox+Math.cos(a)*r*1.15,y:cy+Math.sin(a)*r*0.82,
-                    r:1.6+Math.random()*2.2,ph:Math.random()*Math.PI*2});
-            }
-        }
-        lobe(-R*0.42,20);lobe(R*0.42,20);
-        /* connect each node to its 2 nearest neighbours */
-        nodes.forEach((a,i)=>{
-            const d=nodes.map((b,j)=>({j,dd:(a.x-b.x)**2+(a.y-b.y)**2}))
-                .filter(o=>o.j!==i).sort((p,q)=>p.dd-q.dd).slice(0,2);
-            d.forEach(o=>{const key=Math.min(i,o.j)+'-'+Math.max(i,o.j);
-                if(!edges.some(e=>e.key===key))edges.push({key,a:i,b:o.j,t0:Math.random()*1700});});
-        });
-        /* outer nodes carry the polymath labels */
-        const outer=[...nodes.keys()].sort((i,j)=>
-            (Math.abs(nodes[j].x-cx)+Math.abs(nodes[j].y-cy))-(Math.abs(nodes[i].x-cx)+Math.abs(nodes[i].y-cy)))
-            .slice(0,labels.length);
-        /* travelling pulses */
-        const pulses=Array.from({length:9},()=>({e:Math.floor(Math.random()*edges.length),
-            p:Math.random(),v:0.004+Math.random()*0.006}));
-
-        let start=null,done=false;
-        function frame(ts){
-            if(done)return;
-            if(!start)start=ts;const t=ts-start;
-            ctx.clearRect(0,0,W,H);
-
-            /* edges sketch themselves in */
-            edges.forEach(e=>{
-                const p=Math.max(0,Math.min(1,(t-e.t0)/900));if(p<=0)return;
-                const A=nodes[e.a],B=nodes[e.b];
-                ctx.strokeStyle='rgba(174,183,196,'+(0.10+0.16*p)+')';
-                ctx.lineWidth=1;
-                ctx.beginPath();ctx.moveTo(A.x,A.y);
-                ctx.lineTo(A.x+(B.x-A.x)*p,A.y+(B.y-A.y)*p);ctx.stroke();
-            });
-            /* nodes breathe */
-            nodes.forEach((n,i)=>{
-                const born=Math.min(...edges.filter(e=>e.a===i||e.b===i).map(e=>e.t0),1700);
-                if(t<born)return;
-                const glow=0.5+0.5*Math.sin(ts/700+n.ph);
-                ctx.fillStyle='rgba(233,236,241,'+(0.35+0.45*glow)+')';
-                ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,7);ctx.fill();
-            });
-            /* signals travel after the sketch settles */
-            if(t>1400)pulses.forEach(p=>{
-                p.p+=p.v;if(p.p>1){p.p=0;p.e=Math.floor(Math.random()*edges.length);}
-                const e=edges[p.e],A=nodes[e.a],B=nodes[e.b];
-                const x=A.x+(B.x-A.x)*p.p,y=A.y+(B.y-A.y)*p.p;
-                const g=ctx.createRadialGradient(x,y,0,x,y,7);
-                g.addColorStop(0,'rgba(242,245,249,.9)');g.addColorStop(1,'rgba(242,245,249,0)');
-                ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,7,0,7);ctx.fill();
-            });
-            /* domain labels fade in around the outer nodes */
-            ctx.font='11px "JetBrains Mono",monospace';ctx.textAlign='center';
-            outer.forEach((idx,k)=>{
-                const alpha=Math.max(0,Math.min(1,(t-1900-k*120)/600));if(alpha<=0)return;
-                const n=nodes[idx],above=n.y<cy;
-                ctx.fillStyle='rgba(139,147,160,'+(alpha*0.9)+')';
-                ctx.fillText(labels[k].toUpperCase(),n.x,n.y+(above?-14:20));
-            });
-            if(t>2300)intro.classList.add('txt-on');
-            if(t>4600)dismiss();
-            requestAnimationFrame(frame);
-        }
-        requestAnimationFrame(frame);
-
+        let done=false;
         function dismiss(){
             if(done)return;done=true;
             intro.classList.add('gone');
             document.body.classList.add('live');
+            try{localStorage.setItem('introSeen','1');}catch(e){}
             setTimeout(()=>intro.remove(),1000);
         }
         intro.addEventListener('click',dismiss);
         $('skip').addEventListener('click',e=>{e.stopPropagation();dismiss();});
+
+        /* run the name/rule/tagline animation, hold briefly, then reveal the page */
+        requestAnimationFrame(()=>intro.classList.add('txt-on'));
+        setTimeout(dismiss,2600);
     })();
     if(reduced)document.body.classList.add('live');
 
@@ -897,11 +832,18 @@
     })(shell('publications',S.publications));
 
     /* achievements */
-    (b=>{if(!b)return;const g=el('div','ach-grid stagger');
-        S.achievements.items.forEach(a=>{const c=el('div','glass ach');
-            c.appendChild(el('div','when',esc(a.when)));c.appendChild(el('h3',null,esc(a.title)));
-            c.appendChild(el('p',null,esc(a.note)));g.appendChild(c)});
-        b.appendChild(g);
+    (b=>{if(!b)return;
+        const groups=[...new Set(S.achievements.items.map(a=>a.group).filter(Boolean))];
+        (groups.length?groups:[null]).forEach(gr=>{
+            const items=gr?S.achievements.items.filter(a=>a.group===gr):S.achievements.items;
+            const section=el('div','ach-group');
+            if(gr)section.appendChild(el('h3',null,esc(gr)));
+            const g=el('div','ach-grid stagger');
+            items.forEach(a=>{const c=el('div','glass ach');
+                c.appendChild(el('div','when',esc(a.when)));c.appendChild(el('h3',null,esc(a.title)));
+                c.appendChild(el('p',null,esc(a.note)));g.appendChild(c)});
+            section.appendChild(g);b.appendChild(section);
+        });
     })(shell('achievements',S.achievements));
 
     /* beyond */
@@ -934,20 +876,30 @@
 
         const btn=el('button','theme-btn');btn.setAttribute('aria-label','Toggle light / dark mode');
         const sync=()=>btn.textContent=root.dataset.theme==='dark'?'☀️':'🌙';
-        btn.addEventListener('click',()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';sync()});
+        btn.addEventListener('click',()=>{
+            root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+            try{localStorage.setItem('theme',root.dataset.theme);}catch(e){}
+            sync();
+        });
         sync();n.appendChild(btn);
 
         /* mobile dropdown — swaps in below 640px instead of a scrollable strip,
            since a horizontally-scrollable row of tap targets is unreliable on touch. */
-        const menuBtn=el('button','menu-btn','☰');menuBtn.setAttribute('aria-label','Open menu');
+        const menuBtn=el('button','menu-btn','☰');
+        menuBtn.setAttribute('aria-label','Open menu');
+        menuBtn.setAttribute('aria-expanded','false');
+        menuBtn.setAttribute('aria-controls','mobileNav');
         n.appendChild(menuBtn);
         const mnav=$('mobileNav');
+        const closeMenu=()=>{mnav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');};
         links.forEach(l=>{const a=el('a',null,esc(l.label));a.href=l.href;
-            a.addEventListener('click',()=>mnav.classList.remove('open'));mnav.appendChild(a)});
-        menuBtn.addEventListener('click',()=>mnav.classList.toggle('open'));
+            a.addEventListener('click',closeMenu);mnav.appendChild(a)});
+        menuBtn.addEventListener('click',()=>{
+            const open=mnav.classList.toggle('open');
+            menuBtn.setAttribute('aria-expanded',open?'true':'false');
+        });
         document.addEventListener('click',e=>{
-            if(mnav.classList.contains('open')&&!mnav.contains(e.target)&&!menuBtn.contains(e.target))
-                mnav.classList.remove('open');
+            if(mnav.classList.contains('open')&&!mnav.contains(e.target)&&!menuBtn.contains(e.target))closeMenu();
         });
     })();
 
