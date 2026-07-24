@@ -525,6 +525,8 @@
                 enabled:true, navLabel:"Now",
                 title:"Currently building",
                 items: [
+                    { name:"Overturn", eta:"Founder · Actively developing", progress:45,
+                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. It drafts citation-backed appeals and flags duplicate or over-benchmark charges, then the patient reviews, signs, and sends. Built on a Node/Express API with the Claude API for drafting, Stripe payments, and Postgres." },
                     { name:"DocLink", eta:"Founder & Full-Stack Developer · Actively developing", progress:75,
                         desc:"Blockchain-verified doctor collaboration platform built end-to-end with React/Vite (Vercel) and Node/Express/Prisma/PostgreSQL (Railway), with libsodium/Argon2 end-to-end encryption for sensitive medical communications.",
                         link:"https://doclink.in", linkLabel:"Visit DocLink ↗" },
@@ -538,6 +540,9 @@
                 enabled:true, navLabel:"Projects",
                 title:"Projects",
                 items: [
+                    { category:"AI", title:"Overturn",
+                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. It drafts citation-backed appeals, flags duplicate or over-benchmark charges, and routes them through a clinician-review queue, then the patient reviews, signs, and sends. Node/Express REST API with the Claude API for drafting (template fallback), Stripe payments, and Postgres.",
+                        tags:["Node.js","Express","Claude API","Stripe","PostgreSQL"], links:[] },
                     { category:"Security", title:"DocLink",
                         desc:"Blockchain-verified doctor collaboration platform, built end-to-end using React + Vite (Vercel) and Node.js + Express + Prisma + PostgreSQL (Railway), with libsodium/Argon2 end-to-end encryption for sensitive medical communications.",
                         tags:["React","Vite","Node.js","Prisma","PostgreSQL"], links:[{label:"Visit ↗",url:"https://doclink.in"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/Doclink"}] },
