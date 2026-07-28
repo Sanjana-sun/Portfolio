@@ -332,23 +332,20 @@
         .plinks{display:flex;gap:18px}
         .plinks a{font-size:14px;font-weight:700;text-decoration:none;color:var(--steel);border-bottom:1px solid transparent;transition:border-color .2s}
         .plinks a:hover{border-color:var(--steel)}
-        /* live-site preview — floating panel shows the whole UI on hover */
-        .pcard.has-shot{cursor:pointer}
-        #proj-preview{
-            position:fixed;z-index:2000;width:460px;max-width:88vw;opacity:0;visibility:hidden;
-            transform:translateY(8px) scale(.98);transform-origin:center bottom;
-            transition:opacity .22s ease,transform .22s ease,visibility .22s;pointer-events:none;
-            border:1px solid var(--border-hi);border-radius:14px;overflow:hidden;
-            box-shadow:var(--glow),var(--bevel);background:var(--card);
-        }
-        #proj-preview.on{opacity:1;visibility:visible;transform:none}
-        #proj-preview img{display:block;width:100%;height:auto}
-        #proj-preview .cap{
-            position:absolute;left:0;right:0;bottom:0;padding:20px 16px 12px;
-            font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#EDF0F4;
-            background:linear-gradient(to top,rgba(6,7,9,.88),transparent);
-        }
-        @media(hover:none){#proj-preview{display:none!important}}
+        /* live-site preview — featured landscape card that reveals the whole UI on hover */
+        .pcard.has-shot{grid-column:span 2;min-height:380px;justify-content:flex-end}
+        @media(max-width:680px){.pcard.has-shot{grid-column:span 1;min-height:300px}}
+        .pcard-bg{position:absolute;inset:0;z-index:0;overflow:hidden;border-radius:inherit}
+        .pcard-bg img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
+            opacity:.14;filter:grayscale(.5);transform:scale(1.02);
+            transition:opacity .45s ease,filter .45s ease,transform .6s ease}
+        .pcard-bg::after{content:"";position:absolute;inset:0;
+            background:linear-gradient(to top,var(--card) 6%,color-mix(in srgb,var(--card) 55%,transparent) 34%,transparent 62%)}
+        .pcard.has-shot:hover .pcard-bg img{opacity:1;filter:none;transform:scale(1)}
+        .pcard.has-shot > :not(.pcard-bg){position:relative;z-index:1}
+        .pcard.has-shot:hover .pcat,
+        .pcard.has-shot:hover p,
+        .pcard.has-shot:hover .tags{opacity:0;transition:opacity .3s}
 
         /* experience */
         .xp-card{padding:6px 32px}
@@ -815,8 +812,9 @@
             const c=el('article','glass pcard');c.dataset.cat=p.category||'';
             if(p.preview&&p.website){
                 c.classList.add('has-shot');
-                c.dataset.preview=p.preview;
-                c.dataset.website=p.website;
+                const bg=el('div','pcard-bg');
+                bg.innerHTML=`<img loading="lazy" src="${esc(p.preview)}" alt="Preview of the ${esc(p.title)} website">`;
+                c.appendChild(bg);
             }
             if(p.category)c.appendChild(el('div','pcat',esc(p.category)));
             c.appendChild(el('h3',null,esc(p.title)));
@@ -827,34 +825,6 @@
             g.appendChild(c);
         });
         b.appendChild(g);
-
-        /* floating live-site preview: shows the whole UI on hover, anchored to the card */
-        const shots=[...g.querySelectorAll('.pcard.has-shot')];
-        if(shots.length&&matchMedia('(hover:hover)').matches){
-            const pv=el('div');pv.id='proj-preview';
-            const im=el('img');im.alt='Live website preview';
-            const cap=el('div','cap');
-            pv.append(im,cap);document.body.appendChild(pv);
-            let active=null,raf;
-            const place=card=>{
-                const r=card.getBoundingClientRect();
-                const w=pv.offsetWidth||460,h=pv.offsetHeight||300;
-                let left=Math.max(12,Math.min(r.left+r.width/2-w/2,innerWidth-w-12));
-                let top=r.top-h-14; if(top<12)top=Math.min(r.bottom+14,innerHeight-h-12);
-                pv.style.left=left+'px';pv.style.top=top+'px';
-            };
-            shots.forEach(card=>{
-                card.addEventListener('mouseenter',()=>{
-                    active=card;
-                    if(im.getAttribute('src')!==card.dataset.preview)im.src=card.dataset.preview;
-                    cap.textContent=card.querySelector('h3').textContent+'  ·  Visit ↗';
-                    place(card);pv.classList.add('on');
-                });
-                card.addEventListener('mousemove',()=>{if(active===card){cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>place(card));}});
-                card.addEventListener('mouseleave',()=>{if(active===card){active=null;pv.classList.remove('on');}});
-            });
-            addEventListener('scroll',()=>{if(active)place(active);},{passive:true});
-        }
     })(shell('projects',S.projects));
 
     /* experience */
