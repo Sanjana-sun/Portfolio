@@ -332,6 +332,21 @@
         .plinks{display:flex;gap:18px}
         .plinks a{font-size:14px;font-weight:700;text-decoration:none;color:var(--steel);border-bottom:1px solid transparent;transition:border-color .2s}
         .plinks a:hover{border-color:var(--steel)}
+        /* live-site preview on hover (only cards with a website) */
+        .pcard-shot{position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none;
+            border-radius:inherit;overflow:hidden;text-decoration:none;transition:opacity .4s ease}
+        .pcard-shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+        .pcard-shot::after{content:"";position:absolute;inset:0;
+            background:linear-gradient(to top,rgba(6,7,9,.94) 4%,rgba(6,7,9,.12) 42%,rgba(6,7,9,.30))}
+        .pcard.has-shot:hover .pcard-shot{opacity:1;pointer-events:auto}
+        .pcard.has-shot:hover .pcat,
+        .pcard.has-shot:hover h3,
+        .pcard.has-shot:hover p,
+        .pcard.has-shot:hover .tags{opacity:0;transition:opacity .25s}
+        .pcard.has-shot .plinks{position:relative;z-index:3;transition:opacity .25s}
+        .pcard.has-shot:hover .plinks a{color:#EDF0F4}
+        .pcard.has-shot:hover .plinks a:hover{border-color:#EDF0F4}
+        @media(hover:none){.pcard-shot{display:none}}
 
         /* experience */
         .xp-card{padding:6px 32px}
@@ -543,7 +558,7 @@
                     { category:"AI", title:"Overturn",
                         desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. It drafts citation-backed appeals, flags duplicate or over-benchmark charges, and routes them through a clinician-review queue, then the patient reviews, signs, and sends. Node/Express REST API with the Claude API for drafting (template fallback), Stripe payments, and Postgres.",
                         tags:["Node.js","Express","Claude API","Stripe","PostgreSQL"], links:[] },
-                    { category:"Security", title:"DocLink",
+                    { category:"Security", title:"DocLink", website:"https://doclink.in", preview:"previews/doclink.jpg",
                         desc:"Blockchain-verified doctor collaboration platform, built end-to-end using React + Vite (Vercel) and Node.js + Express + Prisma + PostgreSQL (Railway), with libsodium/Argon2 end-to-end encryption for sensitive medical communications.",
                         tags:["React","Vite","Node.js","Prisma","PostgreSQL"], links:[{label:"Visit ↗",url:"https://doclink.in"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/Doclink"}] },
                     { category:"Security", title:"Selective-Disclosure Identity Wallet",
@@ -796,6 +811,14 @@
         const g=el('div','proj-grid stagger');
         S.projects.items.forEach(p=>{
             const c=el('article','glass pcard');c.dataset.cat=p.category||'';
+            if(p.preview&&p.website){
+                c.classList.add('has-shot');
+                const shot=el('a','pcard-shot');
+                shot.href=p.website;shot.target='_blank';shot.rel='noopener';
+                shot.setAttribute('aria-label','Visit the '+p.title+' website');
+                shot.innerHTML=`<img loading="lazy" src="${esc(p.preview)}" alt="Preview of the ${esc(p.title)} website">`;
+                c.appendChild(shot);
+            }
             if(p.category)c.appendChild(el('div','pcat',esc(p.category)));
             c.appendChild(el('h3',null,esc(p.title)));
             c.appendChild(el('p',null,esc(p.desc)));
