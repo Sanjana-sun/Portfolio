@@ -332,20 +332,21 @@
         .plinks{display:flex;gap:18px}
         .plinks a{font-size:14px;font-weight:700;text-decoration:none;color:var(--steel);border-bottom:1px solid transparent;transition:border-color .2s}
         .plinks a:hover{border-color:var(--steel)}
-        /* live-site preview — featured landscape card that reveals the whole UI on hover */
-        .pcard.has-shot{grid-column:span 2;min-height:380px;justify-content:flex-end}
-        @media(max-width:680px){.pcard.has-shot{grid-column:span 1;min-height:300px}}
-        .pcard-bg{position:absolute;inset:0;z-index:0;overflow:hidden;border-radius:inherit}
-        .pcard-bg img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
-            opacity:.14;filter:grayscale(.5);transform:scale(1.02);
-            transition:opacity .45s ease,filter .45s ease,transform .6s ease}
-        .pcard-bg::after{content:"";position:absolute;inset:0;
-            background:linear-gradient(to top,var(--card) 6%,color-mix(in srgb,var(--card) 55%,transparent) 34%,transparent 62%)}
-        .pcard.has-shot:hover .pcard-bg img{opacity:1;filter:none;transform:scale(1)}
-        .pcard.has-shot > :not(.pcard-bg){position:relative;z-index:1}
+        /* live-site preview — plain description card at rest; site UI fills it only on hover */
+        .pcard-shot{position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none;
+            border-radius:inherit;overflow:hidden;text-decoration:none;transition:opacity .3s ease}
+        .pcard-shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+        .pcard-shot::after{content:"";position:absolute;inset:0;
+            background:linear-gradient(to top,rgba(6,7,9,.92) 6%,rgba(6,7,9,.10) 46%,rgba(6,7,9,.28))}
+        .pcard.has-shot:hover .pcard-shot{opacity:1;pointer-events:auto}
         .pcard.has-shot:hover .pcat,
+        .pcard.has-shot:hover h3,
         .pcard.has-shot:hover p,
-        .pcard.has-shot:hover .tags{opacity:0;transition:opacity .3s}
+        .pcard.has-shot:hover .tags{opacity:0;transition:opacity .2s}
+        .pcard.has-shot .plinks{position:relative;z-index:3}
+        .pcard.has-shot:hover .plinks a{color:#EDF0F4}
+        .pcard.has-shot:hover .plinks a:hover{border-color:#EDF0F4}
+        @media(hover:none){.pcard-shot{display:none}}
 
         /* experience */
         .xp-card{padding:6px 32px}
@@ -812,9 +813,11 @@
             const c=el('article','glass pcard');c.dataset.cat=p.category||'';
             if(p.preview&&p.website){
                 c.classList.add('has-shot');
-                const bg=el('div','pcard-bg');
-                bg.innerHTML=`<img loading="lazy" src="${esc(p.preview)}" alt="Preview of the ${esc(p.title)} website">`;
-                c.appendChild(bg);
+                const shot=el('a','pcard-shot');
+                shot.href=p.website;shot.target='_blank';shot.rel='noopener';
+                shot.setAttribute('aria-label','Visit the '+p.title+' website');
+                shot.innerHTML=`<img loading="lazy" src="${esc(p.preview)}" alt="Preview of the ${esc(p.title)} website">`;
+                c.appendChild(shot);
             }
             if(p.category)c.appendChild(el('div','pcat',esc(p.category)));
             c.appendChild(el('h3',null,esc(p.title)));
