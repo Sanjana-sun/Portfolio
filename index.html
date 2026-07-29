@@ -548,9 +548,9 @@
                     { name:"DocLink", eta:"Founder & Full-Stack Developer · Actively developing", progress:75,
                         desc:"Blockchain-verified doctor collaboration platform built end-to-end with React/Vite (Vercel) and Node/Express/Prisma/PostgreSQL (Railway), with libsodium/Argon2 end-to-end encryption for sensitive medical communications.",
                         link:"https://doclink.in", linkLabel:"Visit DocLink ↗" },
-                    { name:"MedLink (DocLink Student Platform)", eta:"Actively developing", progress:55,
-                        desc:"Student-facing companion to DocLink, served at doclink.in/students via path-based Vercel routing, sharing the same backend and PostgreSQL database as an independent React + Vite frontend.",
-                        link:"https://github.com/Sanjana-sun/medlink-frontend", linkLabel:"View code ↗" },
+                    { name:"MedLink", eta:"Actively developing", progress:55,
+                        desc:"A learning platform for medical students bringing clinical cases, quizzes, doctor-answered Q&A, study groups, and mentorship into one place. A companion to DocLink, built as an independent React + Vite frontend.",
+                        link:"https://medlink-frontend-sigma.vercel.app/", linkLabel:"Visit MedLink ↗" },
                 ],
             },
 
@@ -570,9 +570,9 @@
                     { category:"Security", title:"Selective-Disclosure Identity Wallet",
                         desc:"Privacy-preserving verification protocol using Ed25519 signatures and HKDF-based key derivation, letting sites verify one attribute without exposing personal data. A separate cryptographic key per relying party keeps identities unlinkable across sites, confirmed with automated tests covering tamper detection, replay attacks, and duplicate-signup prevention.",
                         tags:["Cryptography","Ed25519","HKDF"], links:[{label:"Code ↗",url:"https://github.com/Sanjana-sun/identity-wallet"}] },
-                    { category:"Web", title:"MedLink (DocLink Student Platform)",
-                        desc:"Student-facing companion platform to DocLink, served at doclink.in/students via path-based Vercel routing while sharing the same backend and PostgreSQL database. It runs as an independent React + Vite frontend with basename-scoped routing so students and doctors share cases without a duplicated codebase.",
-                        tags:["React","Vite","React Router","PostgreSQL"], links:[{label:"Code ↗",url:"https://github.com/Sanjana-sun/medlink-frontend"}] },
+                    { category:"Web", title:"MedLink", website:"https://medlink-frontend-sigma.vercel.app/", preview:"previews/medlink.jpg",
+                        desc:"A learning platform for medical students that brings clinical cases, quizzes, doctor-answered Q&A, study groups, and mentorship into one place. A companion to DocLink, built as an independent React + Vite frontend.",
+                        tags:["React","Vite","React Router","PostgreSQL"], links:[{label:"Visit ↗",url:"https://medlink-frontend-sigma.vercel.app/"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/medlink-frontend"}] },
                     { category:"Security", title:"Real-Time DDoS Detection for IoT Edge Devices",
                         desc:"Probabilistic streaming pipeline (Bloom filter, Count-Min Sketch, HyperLogLog, Misra-Gries) for real-time DDoS detection on memory-constrained IoT devices, replacing an O(n) exact-counting baseline with fixed-memory approximation.",
                         tags:["Python","Data Structures","IoT"], links:[{label:"Code ↗",url:"https://github.com/Sanjana-sun/ddos-detection"}] },
@@ -817,12 +817,18 @@
         const g=el('div','proj-grid stagger');
         S.projects.items.forEach(p=>{
             const c=el('article','glass pcard');c.dataset.cat=p.category||'';
-            if(p.preview&&p.website){
+            if(p.website){
                 c.classList.add('has-shot');
                 const shot=el('a','pcard-shot');
                 shot.href=p.website;shot.target='_blank';shot.rel='noopener';
                 shot.setAttribute('aria-label','Visit the '+p.title+' website');
-                shot.innerHTML=`<img loading="lazy" src="${esc(p.preview)}" alt="Preview of the ${esc(p.title)} website">`;
+                const img=el('img');
+                img.loading='lazy';img.alt='Live preview of the '+p.title+' website';
+                /* live auto-updating screenshot of the deployed site; falls back to a
+                   committed snapshot if the service is unavailable */
+                img.src='https://image.thum.io/get/width/900/crop/760/noanimate/'+p.website;
+                if(p.preview)img.addEventListener('error',()=>{if(img.src.indexOf('thum.io')>-1)img.src=p.preview;});
+                shot.appendChild(img);
                 c.appendChild(shot);
             }
             if(p.category)c.appendChild(el('div','pcat',esc(p.category)));
