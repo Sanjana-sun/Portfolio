@@ -384,6 +384,9 @@
         .ach .when{font-family:var(--mono);font-size:11.5px;letter-spacing:.24em;color:var(--faint);text-transform:uppercase}
         .ach h3{font-family:var(--display);font-size:16.5px;font-weight:700;margin:8px 0 5px}
         .ach p{font-size:14px;color:var(--muted)}
+        .ach-link{display:inline-block;margin-top:12px;font-size:13px;font-weight:700;text-decoration:none;
+            color:var(--steel);border-bottom:1px solid var(--border-hi);transition:border-color .2s}
+        .ach-link:hover{border-color:var(--steel)}
 
         /* beyond */
         .beyond-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
@@ -609,7 +612,7 @@
                 enabled:true, navLabel:"Achievements",
                 title:"Achievements & certifications",
                 items: [
-                    { group:"Certifications", when:"2026", title:"Fortinet Certified Associate Cybersecurity", note:"Certification in cybersecurity fundamentals." },
+                    { group:"Certifications", when:"2026", title:"Fortinet Certified Associate Cybersecurity", note:"Certification in cybersecurity fundamentals.", link:"https://www.credly.com/badges/33ccbc00-4f1d-4ee3-82bb-ed80b4577953/public_url" },
                     { group:"Certifications", when:"2025", title:"Full-Stack Engineer", note:"Professional certificate by Skillsoft." },
                     { group:"Certifications", when:"2025", title:"Machine Learning Crash Course", note:"Completed Google's ML Crash Course." },
                     { group:"Certifications", when:"2024", title:"Google Cybersecurity", note:"Professional certificate in cybersecurity fundamentals." },
@@ -882,7 +885,10 @@
             const g=el('div','ach-grid stagger');
             items.forEach(a=>{const c=el('div','glass ach');
                 c.appendChild(el('div','when',esc(a.when)));c.appendChild(el('h3',null,esc(a.title)));
-                c.appendChild(el('p',null,esc(a.note)));g.appendChild(c)});
+                c.appendChild(el('p',null,esc(a.note)));
+                if(a.link){const lk=el('a','ach-link','View credential ↗');
+                    lk.href=a.link;lk.target='_blank';lk.rel='noopener';c.appendChild(lk);}
+                g.appendChild(c)});
             section.appendChild(g);b.appendChild(section);
         });
     })(shell('achievements',S.achievements));
