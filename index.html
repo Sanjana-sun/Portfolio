@@ -378,6 +378,16 @@
         .ach-group h3{font-family:var(--display);font-size:13px;font-weight:700;letter-spacing:.12em;
             text-transform:uppercase;color:var(--faint);margin-bottom:14px}
         .ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+        /* horizontal scroller for large groups (e.g. certifications) */
+        .ach-scroll{display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;padding:16px 2px 22px;
+            scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;
+            scrollbar-width:thin;scrollbar-color:var(--border-hi) transparent;
+            -webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 95%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 3%,#000 95%,transparent)}
+        .ach-scroll::-webkit-scrollbar{height:6px}
+        .ach-scroll::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:99px}
+        .ach-scroll::-webkit-scrollbar-track{background:transparent}
+        .ach-scroll .ach{flex:0 0 auto;width:266px;scroll-snap-align:start}
         .ach{padding:26px}
         .ach::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--steel),transparent)}
         .ach:hover{transform:translateY(-5px);border-color:var(--border-hi);box-shadow:var(--glow),var(--bevel)}
@@ -498,13 +508,13 @@
                 enabled:true, navLabel:"About",
                 title:"About me",
                 paragraphs: [
-                    "MS Computer Science student at <strong>Northeastern University's Khoury College</strong>, expected December 2027. Previously earned a B.Tech in Computer Science from Anurag University (2025).",
-                    "Founder & full-stack developer of <strong>DocLink</strong>, a blockchain-verified doctor collaboration platform built end-to-end with React/Vite, Node/Express/Prisma/PostgreSQL, and libsodium/Argon2 encryption for secure medical communications.",
+                    "MS Computer Science student at <strong>Northeastern University's Khoury College</strong>, expected May 2027. Previously earned a B.Tech in Computer Science from Anurag University (2025).",
+                    "Founder & full-stack developer of <strong>DocLink</strong>, a doctor-collaboration platform I built end-to-end and solo: 75+ REST endpoints over a 14-model PostgreSQL schema, ~13,500 lines of React and Node, localized into 16 languages, with client-side end-to-end encryption (Argon2 keypairs, NaCl crypto_box) so plaintext medical data never leaves the browser.",
                     "Also exploring <strong>computational neuroscience</strong> through Neuromatch Academy, working with neural data analysis and computational modeling.",
                 ],
                 facts: [
                     { k:"Currently", v:"MS CS · Northeastern Khoury College" },
-                    { k:"Grad date", v:"Expected Dec 2027" },
+                    { k:"Grad date", v:"Expected May 2027" },
                     { k:"Focus",     v:"Full-Stack Engineering & Security" },
                     { k:"Open to",   v:"Research · Co-op opportunities" },
                 ],
@@ -546,13 +556,13 @@
                 title:"Currently building",
                 items: [
                     { name:"Overturn", eta:"Founder · Actively developing", progress:45,
-                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. It drafts citation-backed appeals and flags duplicate or over-benchmark charges, then the patient reviews, signs, and sends. Built on a Node/Express API with the Claude API for drafting, Stripe payments, and Postgres.",
+                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. It drafts citation-backed appeals and flags duplicate or over-benchmark charges, then the patient reviews, signs, and sends. Built on a Node/Express API (39 REST endpoints across 9 services) with the Claude API for drafting, an automated evaluation harness for output quality, five role-based portals, Stripe payments, and Postgres.",
                         link:"https://overturn-production.up.railway.app/", linkLabel:"Visit Overturn ↗" },
                     { name:"DocLink", eta:"Founder & Full-Stack Developer · Actively developing", progress:75,
-                        desc:"Blockchain-verified doctor collaboration platform built end-to-end with React/Vite (Vercel) and Node/Express/Prisma/PostgreSQL (Railway), with libsodium/Argon2 end-to-end encryption for sensitive medical communications.",
+                        desc:"Doctor-collaboration platform built end-to-end and solo: 75+ REST endpoints over a 14-model PostgreSQL schema (Prisma), ~13,500 lines of React/Vite (Vercel) and Node/Express (Railway), localized into 16 languages, with client-side end-to-end encryption (Argon2 keypairs, NaCl crypto_box, a wrapped key per case) so plaintext medical data never leaves the browser.",
                         link:"https://doclink.in", linkLabel:"Visit DocLink ↗" },
                     { name:"MedLink", eta:"Actively developing", progress:55,
-                        desc:"A learning platform for medical students bringing clinical cases, quizzes, doctor-answered Q&A, study groups, and mentorship into one place. A companion to DocLink, built as an independent React + Vite frontend.",
+                        desc:"A learning platform for medical students bringing clinical cases, quizzes, doctor-answered Q&A, study groups, and mentorship into one place. A companion to DocLink: a React + Vite frontend backed by a 10-model, 28-endpoint Node/Express + Prisma API.",
                         link:"https://medlink-frontend-sigma.vercel.app/", linkLabel:"Visit MedLink ↗" },
                 ],
             },
@@ -562,11 +572,14 @@
                 title:"Projects",
                 items: [
                     { category:"AI", title:"Overturn", website:"https://overturn-production.up.railway.app/", preview:"previews/overturn.jpg",
-                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. It drafts citation-backed appeals, flags duplicate or over-benchmark charges, and routes them through a clinician-review queue, then the patient reviews, signs, and sends. Node/Express REST API with the Claude API for drafting (template fallback), Stripe payments, and Postgres.",
+                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. It drafts citation-backed appeals, flags duplicate or over-benchmark charges, and routes them through a clinician-review queue, then the patient reviews, signs, and sends. Node/Express REST API (39 endpoints across 9 services) with the Claude API for drafting (template fallback), an automated LLM evaluation harness, five role-based portals, Stripe payments, and Postgres.",
                         tags:["Node.js","Express","Claude API","Stripe","PostgreSQL"], links:[{label:"Visit ↗",url:"https://overturn-production.up.railway.app/"}] },
+                    { category:"AI", title:"On-Device INT8 Image Classifier",
+                        desc:"A compact CNN trained from scratch, then quantized to INT8 for efficient edge inference. The quantized model is 3.78x smaller and ~1.8x faster on CPU for a 0.13-point accuracy change (91.6% to 91.4% on FashionMNIST), with the full train, quantize, and evaluate pipeline included.",
+                        tags:["PyTorch","Quantization","CNN","Edge ML"], links:[{label:"Code ↗",url:"https://github.com/Sanjana-sun/edge-vision-quant"}] },
                     { category:"Security", title:"DocLink", website:"https://doclink.in", preview:"previews/doclink.jpg",
-                        desc:"Blockchain-verified doctor collaboration platform, built end-to-end using React + Vite (Vercel) and Node.js + Express + Prisma + PostgreSQL (Railway), with libsodium/Argon2 end-to-end encryption for sensitive medical communications.",
-                        tags:["React","Vite","Node.js","Prisma","PostgreSQL"], links:[{label:"Visit ↗",url:"https://doclink.in"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/Doclink"}] },
+                        desc:"Doctor-collaboration platform, built end-to-end and solo: 75+ REST endpoints over a 14-model PostgreSQL schema (Prisma), ~13,500 lines of React + Vite (Vercel) and Node.js + Express (Railway), localized into 16 languages, with client-side end-to-end encryption (Argon2 keypairs, NaCl crypto_box with a wrapped key per case) so plaintext medical data never leaves the browser.",
+                        tags:["React","Vite","Node.js","Prisma","PostgreSQL"], links:[{label:"Visit ↗",url:"https://doclink.in"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/doclink-frontend"}] },
                     { category:"Web", title:"SeatMate", website:"https://seatmate-kohl.vercel.app/", preview:"previews/seatmate.jpg",
                         desc:"A matchmaker for solo movie-goers: opt in and SeatMate pairs you with a compatible fellow solo-goer, then seats you together in seats the theater hasn't sold. Built with Next.js and React, deployed on Vercel.",
                         tags:["Next.js","React","TypeScript","Vercel"], links:[{label:"Visit ↗",url:"https://seatmate-kohl.vercel.app/"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/seatmate"}] },
@@ -574,7 +587,7 @@
                         desc:"Privacy-preserving verification protocol using Ed25519 signatures and HKDF-based key derivation, letting sites verify one attribute without exposing personal data. A separate cryptographic key per relying party keeps identities unlinkable across sites, confirmed with automated tests covering tamper detection, replay attacks, and duplicate-signup prevention.",
                         tags:["Cryptography","Ed25519","HKDF"], links:[{label:"Code ↗",url:"https://github.com/Sanjana-sun/identity-wallet"}] },
                     { category:"Web", title:"MedLink", website:"https://medlink-frontend-sigma.vercel.app/", preview:"previews/medlink.jpg",
-                        desc:"A learning platform for medical students that brings clinical cases, quizzes, doctor-answered Q&A, study groups, and mentorship into one place. A companion to DocLink, built as an independent React + Vite frontend.",
+                        desc:"A learning platform for medical students that brings clinical cases, quizzes, doctor-answered Q&A, study groups, and mentorship into one place. A companion to DocLink: a React + Vite frontend backed by a 10-model, 28-endpoint Node/Express + Prisma API.",
                         tags:["React","Vite","React Router","PostgreSQL"], links:[{label:"Visit ↗",url:"https://medlink-frontend-sigma.vercel.app/"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/medlink-frontend"}] },
                     { category:"Security", title:"Real-Time DDoS Detection for IoT Edge Devices",
                         desc:"Probabilistic streaming pipeline (Bloom filter, Count-Min Sketch, HyperLogLog, Misra-Gries) for real-time DDoS detection on memory-constrained IoT devices, replacing an O(n) exact-counting baseline with fixed-memory approximation.",
@@ -895,7 +908,9 @@
             const items=gr?S.achievements.items.filter(a=>a.group===gr):S.achievements.items;
             const section=el('div','ach-group');
             if(gr)section.appendChild(el('h3',null,esc(gr)));
-            const g=el('div','ach-grid stagger');
+            /* large groups scroll horizontally to save vertical space */
+            const scroll=items.length>6;
+            const g=el('div',(scroll?'ach-scroll':'ach-grid')+' stagger');
             items.forEach(a=>{const c=el('div','glass ach');
                 c.appendChild(el('div','when',esc(a.when)));c.appendChild(el('h3',null,esc(a.title)));
                 c.appendChild(el('p',null,esc(a.note)));
