@@ -908,9 +908,8 @@
             const items=gr?S.achievements.items.filter(a=>a.group===gr):S.achievements.items;
             const section=el('div','ach-group');
             if(gr)section.appendChild(el('h3',null,esc(gr)));
-            /* large groups scroll horizontally to save vertical space */
-            const scroll=items.length>6;
-            const g=el('div',(scroll?'ach-scroll':'ach-grid')+' stagger');
+            /* groups scroll horizontally to save vertical space */
+            const g=el('div','ach-scroll stagger');
             items.forEach(a=>{const c=el('div','glass ach');
                 c.appendChild(el('div','when',esc(a.when)));c.appendChild(el('h3',null,esc(a.title)));
                 c.appendChild(el('p',null,esc(a.note)));
