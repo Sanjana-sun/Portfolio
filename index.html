@@ -320,8 +320,8 @@
         }
         .fbtn:hover{color:var(--ink);border-color:var(--border-hi)}
         .fbtn.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-        /* two rows, scroll horizontally for the rest */
-        .proj-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,auto);
+        /* two rows of uniform cards, scroll horizontally for the rest */
+        .proj-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,410px);
             grid-auto-columns:min(500px,84vw);gap:16px;
             overflow-x:auto;overflow-y:hidden;padding:16px 2px 22px;
             scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:var(--border-hi) transparent;
@@ -330,7 +330,8 @@
         .proj-grid::-webkit-scrollbar{height:6px}
         .proj-grid::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:99px}
         .proj-grid::-webkit-scrollbar-track{background:transparent}
-        .pcard{padding:26px 28px;display:flex;flex-direction:column;gap:12px;min-height:300px;scroll-snap-align:start}
+        .pcard{padding:26px 28px;display:flex;flex-direction:column;gap:12px;scroll-snap-align:start}
+        @media(max-width:560px){.proj-grid{grid-template-rows:repeat(2,auto)}}
         .pcard:hover{transform:translateY(-7px);border-color:var(--border-hi);box-shadow:var(--glow),var(--bevel)}
         .pcard.hide{display:none}
         .pcat{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
