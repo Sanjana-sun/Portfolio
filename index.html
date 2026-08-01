@@ -863,7 +863,7 @@
                 img.loading='lazy';img.alt='Live preview of the '+p.title+' website';
                 /* live auto-updating screenshot of the deployed site; falls back to a
                    committed snapshot if the service is unavailable */
-                img.src='https://image.thum.io/get/width/900/crop/760/noanimate/'+p.website;
+                img.src='https://image.thum.io/get/width/900/crop/1020/noanimate/'+p.website;
                 if(p.preview)img.addEventListener('error',()=>{if(img.src.indexOf('thum.io')>-1)img.src=p.preview;});
                 shot.appendChild(img);
                 c.appendChild(shot);
