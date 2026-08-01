@@ -321,14 +321,13 @@
         .fbtn:hover{color:var(--ink);border-color:var(--border-hi)}
         .fbtn.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
         .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}
-        .pcard{padding:26px 28px;display:flex;flex-direction:column;gap:12px;aspect-ratio:16/10}
-        @media(max-width:560px){.proj-grid{grid-template-columns:1fr}.pcard{aspect-ratio:auto}}
+        .pcard{padding:26px 28px;display:flex;flex-direction:column;gap:12px;min-height:300px}
+        @media(max-width:560px){.proj-grid{grid-template-columns:1fr}}
         .pcard:hover{transform:translateY(-7px);border-color:var(--border-hi);box-shadow:var(--glow),var(--bevel)}
         .pcard.hide{display:none}
         .pcat{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
         .pcard h3{font-family:var(--display);font-weight:700;font-size:20px}
-        .pcard p{color:var(--muted);font-size:15px;flex:1;
-            display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+        .pcard p{color:var(--muted);font-size:15px;flex:1}
         .tags{display:flex;gap:7px;flex-wrap:wrap}
         .tag{font-family:var(--mono);font-size:11.5px;color:var(--muted);border:1px solid var(--border);border-radius:6px;padding:4px 10px}
         .plinks{display:flex;gap:18px}
@@ -491,7 +490,7 @@
         tickerWords: ["Full-Stack","Security","Cryptography","Machine Learning","Cloud","Algorithms","Research"],
         heroLinks: [
             { label:"View projects", url:"#projects", primary:true },
-            { label:"Résumé ↓",      url:"Sanjana_Injamuri_Resume.pdf" },
+            { label:"Resume",      url:"Sanjana_Injamuri_Resume.pdf" },
             { label:"GitHub ↗",      url:"https://github.com/Sanjana-sun" },
             { label:"LinkedIn ↗",    url:"https://linkedin.com/in/sanjanainjamuri/" },
         ],
