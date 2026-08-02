@@ -363,7 +363,12 @@
         .xp-item{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--border)}
         .xp-item:last-child{border-bottom:none}
         @media(max-width:680px){.xp-item{grid-template-columns:1fr;gap:6px}}
-        .xp-time{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;color:var(--faint);padding-top:5px}
+        .xp-time{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;color:var(--faint);
+            display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+        .xp-logo{width:46px;height:46px;border-radius:12px;background:#fff;display:grid;place-items:center;
+            overflow:hidden;border:1px solid var(--border);box-shadow:var(--bevel);flex:none}
+        .xp-logo img{width:76%;height:76%;object-fit:contain;display:block}
+        .xp-logo.mono{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.01em;color:var(--steel);background:var(--card-hi)}
         .xp-item h3{font-family:var(--display);font-weight:700;font-size:19px}
         .xp-item .org{color:var(--steel)}
         .xp-item p{color:var(--muted);margin-top:6px;font-size:15px;max-width:64ch}
@@ -610,11 +615,11 @@
                 enabled:true, navLabel:"Work",
                 title:"Work experience",
                 items: [
-                    { time:"Present", role:"Teaching Assistant", org:"Northeastern University · CS 5800 Algorithms",
+                    { time:"Present", role:"Teaching Assistant", org:"Northeastern University · CS 5800 Algorithms", logo:"logos/northeastern.png",
                         summary:"Work extensively with core algorithmic paradigms and engage deeply with algorithm design and analysis." },
-                    { time:"2026", role:"Computational Neuroscience", org:"Neuromatch Academy",
+                    { time:"2026", role:"Computational Neuroscience", org:"Neuromatch Academy", logo:"logos/neuromatch.png",
                         summary:"Worked extensively with neural data analysis and computational modeling techniques as part of an intensive, research-oriented curriculum in computational neuroscience." },
-                    { time:"2025", role:"Member", org:"AI/ML & IoT Clubs",
+                    { time:"2025", role:"Member", org:"AI/ML & IoT Clubs", mono:"AI",
                         summary:"Dove deeply into prototyping and deployment workflows across ML and IoT projects, spanning applied AI techniques, project development, and hardware-software integration." },
                 ],
             },
@@ -888,7 +893,13 @@
     (b=>{if(!b)return;const card=el('div','glass xp-card');
         S.experience.items.forEach(x=>{
             const r=el('article','xp-item');
-            r.appendChild(el('div','xp-time',esc(x.time)));
+            const t=el('div','xp-time');
+            const chip=el('div','xp-logo'+(x.logo?'':' mono'));
+            if(x.logo)chip.innerHTML=`<img src="${esc(x.logo)}" alt="${esc(x.org)} logo" loading="lazy">`;
+            else chip.textContent=x.mono||(x.org.replace(/[^A-Za-z ]/g,' ').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase());
+            t.appendChild(chip);
+            t.appendChild(el('div',null,esc(x.time)));
+            r.appendChild(t);
             const d=el('div');
             d.appendChild(el('h3',null,`${esc(x.role)} · <span class="org">${esc(x.org)}</span>`));
             if(x.summary)d.appendChild(el('p',null,esc(x.summary)));
