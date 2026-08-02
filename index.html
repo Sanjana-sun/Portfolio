@@ -582,7 +582,7 @@
                     { category:"AI", title:"Overturn", website:"https://overturn-production.up.railway.app/", preview:"previews/overturn.jpg",
                         desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. It drafts citation-backed appeals, flags duplicate or over-benchmark charges, and routes them through a clinician-review queue, then the patient reviews, signs, and sends. Node/Express REST API (39 endpoints across 9 services) with the Claude API for drafting (template fallback), an automated LLM evaluation harness, five role-based portals, Stripe payments, and Postgres.",
                         tags:["Node.js","Express","Claude API","Stripe","PostgreSQL"], links:[{label:"Visit ↗",url:"https://overturn-production.up.railway.app/"}] },
-                    { category:"AI", title:"Life OS", website:"https://lifeos-five-bice.vercel.app/", preview:"previews/lifeos.jpg",
+                    { category:"AI", title:"Life OS", website:"https://lifeos-five-bice.vercel.app/", preview:"previews/lifeos.jpg", staticPreview:true,
                         desc:"A private, animated dashboard that pulls one person's whole life (code, music, workouts, films, books, finances, dreams, to-dos) into one cinematic place, narrated by a JARVIS-style AI butler. Built with Next.js 16, React 19, and Prisma over a 19-model PostgreSQL schema, with 5 pluggable data connectors, an Anthropic-powered assistant with tools, a Three.js motion stack, and a client-side end-to-end encrypted vault (AES-256-GCM, PBKDF2).",
                         tags:["Next.js","TypeScript","Prisma","Anthropic SDK","Three.js"], links:[{label:"Visit ↗",url:"https://lifeos-five-bice.vercel.app/"}] },
                     { category:"AI", title:"On-Device INT8 Image Classifier", website:"https://edge-vision-quant-production.up.railway.app",
@@ -857,17 +857,19 @@
         const g=el('div','proj-grid stagger');
         S.projects.items.forEach(p=>{
             const c=el('article','glass pcard');c.dataset.cat=p.category||'';
-            if(p.website){
+            if(p.website||p.preview){
                 c.classList.add('has-shot');
                 const shot=el('a','pcard-shot');
-                shot.href=p.website;shot.target='_blank';shot.rel='noopener';
+                shot.href=p.website||(p.links&&p.links[0]&&p.links[0].url)||'#';shot.target='_blank';shot.rel='noopener';
                 shot.setAttribute('aria-label','Visit the '+p.title+' website');
                 const img=el('img');
-                img.loading='lazy';img.alt='Live preview of the '+p.title+' website';
+                img.loading='lazy';img.alt='Preview of the '+p.title+' website';
                 /* live auto-updating screenshot of the deployed site; falls back to a
-                   committed snapshot if the service is unavailable */
-                img.src='https://image.thum.io/get/width/900/crop/1020/noanimate/'+p.website;
-                if(p.preview)img.addEventListener('error',()=>{if(img.src.indexOf('thum.io')>-1)img.src=p.preview;});
+                   committed snapshot. staticPreview forces the committed image (for
+                   client-rendered pages the screenshot service captures blank). */
+                const useLive=p.website&&!p.staticPreview;
+                img.src=useLive?('https://image.thum.io/get/width/900/crop/1020/noanimate/'+p.website):p.preview;
+                if(useLive&&p.preview)img.addEventListener('error',()=>{if(img.src.indexOf('thum.io')>-1)img.src=p.preview;});
                 shot.appendChild(img);
                 c.appendChild(shot);
             }
