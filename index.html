@@ -522,7 +522,7 @@
                 title:"About me",
                 paragraphs: [
                     "I build and ship end to end, across full-stack products, applied AI, and on-device ML.",
-                    "Founder of <strong>DocLink</strong>, a live doctor-collaboration platform I built solo (75+ REST endpoints, a 14-model PostgreSQL schema, client-side end-to-end encryption, and 16 languages), and <strong>Overturn</strong>, an AI insurance-appeals platform on the Claude API. I also train and quantize models for the edge, most recently an INT8 image classifier that runs 3.78x smaller and ~1.8x faster, with a live demo.",
+                    "Founder of <strong>DocLink</strong>, a live doctor-collaboration platform I built solo (75+ REST endpoints, a 14-model PostgreSQL schema, client-side end-to-end encryption, and 16 languages), and <strong>Overturn</strong>, an AI insurance-appeals platform with a RAG + tool-use agent that drafts citation-grounded appeals (and runs free, no API key). I also train and quantize models for the edge, most recently an INT8 image classifier that runs 3.78x smaller and ~1.8x faster, with a live demo.",
                     "On the research side, I completed Neuromatch Academy in computational neuroscience and TA the graduate Algorithms course at Northeastern.",
                 ],
                 facts: [
@@ -568,8 +568,8 @@
                 enabled:true, navLabel:"Now",
                 title:"Currently building",
                 items: [
-                    { name:"Overturn", eta:"Founder · Actively developing", progress:45,
-                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. It drafts citation-backed appeals and flags duplicate or over-benchmark charges, then the patient reviews, signs, and sends. Built on a Node/Express API (39 REST endpoints across 9 services) with the Claude API for drafting, an automated evaluation harness for output quality, five role-based portals, Stripe payments, and Postgres.",
+                    { name:"Overturn", eta:"Founder · Actively developing", progress:70,
+                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. A retrieval-augmented (RAG) pipeline ranks the relevant federal, state, and denial-code law with BM25 over a 32-passage legal knowledge base, and a tool-using agent plans, gathers the applicable rights, and drafts an appeal grounded in real citations, then the patient reviews, signs, and sends. Runs free with no API key via a deterministic RAG drafter, or on the Claude API when configured. Node/Express API (39 REST endpoints across 9 services), an automated evaluation harness, five role-based portals, Stripe payments, and Postgres.",
                         link:"https://overturn-production.up.railway.app/", linkLabel:"Visit Overturn ↗" },
                     { name:"DocLink", eta:"Founder & Full-Stack Developer · Actively developing", progress:75,
                         desc:"Doctor-collaboration platform built end-to-end and solo: 75+ REST endpoints over a 14-model PostgreSQL schema (Prisma), ~13,500 lines of React/Vite (Vercel) and Node/Express (Railway), localized into 16 languages, with client-side end-to-end encryption (Argon2 keypairs, NaCl crypto_box, a wrapped key per case) so plaintext medical data never leaves the browser.",
@@ -585,8 +585,8 @@
                 title:"Projects",
                 items: [
                     { category:"AI", title:"Overturn", website:"https://overturn-production.up.railway.app/", preview:"previews/overturn.jpg",
-                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. It drafts citation-backed appeals, flags duplicate or over-benchmark charges, and routes them through a clinician-review queue, then the patient reviews, signs, and sends. Node/Express REST API (39 endpoints across 9 services) with the Claude API for drafting (template fallback), an automated LLM evaluation harness, five role-based portals, Stripe payments, and Postgres.",
-                        tags:["Node.js","Express","Claude API","Stripe","PostgreSQL"], links:[{label:"Visit ↗",url:"https://overturn-production.up.railway.app/"}] },
+                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. A RAG pipeline (BM25 retrieval over a 32-passage legal knowledge base) and a tool-using agent draft appeals grounded in real federal, state, and denial-code citations, flag duplicate or over-benchmark charges, and route them through a clinician-review queue, then the patient reviews, signs, and sends. Runs free with no API key via a deterministic RAG drafter, or on the Claude API when configured. Node/Express REST API (39 endpoints across 9 services), an automated LLM evaluation harness, five role-based portals, Stripe payments, and Postgres.",
+                        tags:["Node.js","Express","RAG","Claude API","PostgreSQL"], links:[{label:"Visit ↗",url:"https://overturn-production.up.railway.app/"}] },
                     { category:"Web", title:"SeatMate", website:"https://seatmate-kohl.vercel.app/", preview:"previews/seatmate.jpg",
                         desc:"A matchmaker for solo movie-goers: opt in and SeatMate pairs you with a compatible fellow solo-goer, then seats you together in seats the theater hasn't sold. Built with Next.js and React, deployed on Vercel.",
                         tags:["Next.js","React","TypeScript","Vercel"], links:[{label:"Visit ↗",url:"https://seatmate-kohl.vercel.app/"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/seatmate"}] },
