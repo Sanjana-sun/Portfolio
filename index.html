@@ -525,7 +525,7 @@
                 title:"About me",
                 paragraphs: [
                     "I build and ship end to end, across full-stack products, applied AI, and on-device ML.",
-                    "Founder of <strong>DocLink</strong>, a live doctor-collaboration platform I built solo (75+ REST endpoints, a 14-model PostgreSQL schema, client-side end-to-end encryption, and 16 languages), and <strong>Overturn</strong>, an AI insurance-appeals platform with a RAG + tool-use agent that drafts citation-grounded appeals (and runs free, no API key). I also train and quantize models for the edge, most recently an INT8 image classifier that runs 3.78x smaller and ~1.8x faster, with a live demo.",
+                    "Founder of <strong>DocLink</strong>, a live doctor-collaboration platform I built solo (75+ REST endpoints, a 14-model PostgreSQL schema, client-side end-to-end encryption, and 16 languages), and <strong>Reclaim</strong>, a consumer AI that helps patients appeal denied health-insurance claims and dispute wrong medical bills — a RAG + tool-use agent drafts citation-grounded appeals and hands back a ready-to-mail PDF (runs free, no API key). I also train and quantize models for the edge, most recently an INT8 image classifier that runs 3.78x smaller and ~1.8x faster, with a live demo.",
                     "On the research side, I completed Neuromatch Academy in computational neuroscience and TA the graduate Algorithms course at Northeastern.",
                 ],
                 facts: [
@@ -571,9 +571,9 @@
                 enabled:false, navLabel:"Now",
                 title:"Currently building",
                 items: [
-                    { name:"Overturn", eta:"Founder · Actively developing", progress:70,
-                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. A retrieval-augmented (RAG) pipeline ranks the relevant federal, state, and denial-code law with BM25 over a 32-passage legal knowledge base, and a tool-using agent plans, gathers the applicable rights, and drafts an appeal grounded in real citations, then the patient reviews, signs, and sends. Runs free with no API key via a deterministic RAG drafter, or on the Claude API when configured. Node/Express API (39 REST endpoints across 9 services), an automated evaluation harness, five role-based portals, Stripe payments, and Postgres.",
-                        link:"https://overturn-production.up.railway.app/", linkLabel:"Visit Overturn ↗" },
+                    { name:"Reclaim", eta:"Founder · Actively developing", progress:72,
+                        desc:"A warm, consumer AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. A guided, step-by-step wizard collects the details; a retrieval-augmented (RAG) pipeline ranks the relevant federal, state, and denial-code law with BM25 over a 32-passage legal knowledge base, and a tool-using agent gathers the applicable rights, explains them in plain English, and drafts a citation-grounded appeal. The patient reviews, signs, and downloads a filled-in, ready-to-mail PDF — first appeal free. Runs free with a deterministic drafter (no API key) or on the Claude API. Node/Express API (40+ REST endpoints), an automated eval harness, five role-based portals, Stripe payments, and Postgres.",
+                        link:"https://overturn-production.up.railway.app/", linkLabel:"Visit Reclaim ↗" },
                     { name:"DocLink", eta:"Founder & Full-Stack Developer · Actively developing", progress:75,
                         desc:"Doctor-collaboration platform built end-to-end and solo: 75+ REST endpoints over a 14-model PostgreSQL schema (Prisma), ~13,500 lines of React/Vite (Vercel) and Node/Express (Railway), localized into 16 languages, with client-side end-to-end encryption (Argon2 keypairs, NaCl crypto_box, a wrapped key per case) so plaintext medical data never leaves the browser.",
                         link:"https://doclink.in", linkLabel:"Visit DocLink ↗" },
@@ -587,9 +587,9 @@
                 enabled:true, navLabel:"Projects",
                 title:"Projects",
                 items: [
-                    { category:"AI", title:"Overturn", website:"https://overturn-production.up.railway.app/", preview:"previews/overturn.jpg",
-                        desc:"AI that helps patients fight denied health-insurance claims and dispute wrong medical bills. A RAG pipeline (BM25 over a 32-passage legal knowledge base) and a tool-using agent draft appeals grounded in real federal, state, and denial-code citations; the patient reviews, signs, and sends. Runs free with a deterministic drafter (no API key) or on the Claude API. Node/Express (39 endpoints), five role portals, Stripe, and Postgres.",
-                        tags:["Node.js","Express","RAG","Claude API","PostgreSQL"], links:[{label:"Visit ↗",url:"https://overturn-production.up.railway.app/"}] },
+                    { category:"AI", title:"Reclaim", website:"https://overturn-production.up.railway.app/", preview:"previews/reclaim.jpg",
+                        desc:"A warm consumer AI that gently helps patients fight denied health-insurance claims and dispute wrong medical bills. A step-by-step wizard collects the details; a RAG pipeline (BM25 over a 32-passage legal knowledge base) and a tool-using agent draft an appeal grounded in real federal, state, and denial-code citations and explain the rights in plain English; the patient downloads a filled-in, ready-to-mail PDF — first appeal free. Runs free with a deterministic drafter (no API key) or on the Claude API. Node/Express (40+ endpoints), five role portals, Stripe, and Postgres.",
+                        tags:["Node.js","Express","RAG","Claude API","PostgreSQL","Stripe"], links:[{label:"Visit ↗",url:"https://overturn-production.up.railway.app/"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/reclaim"}] },
                     { category:"AI", title:"BioBrain", website:"https://sanjana-sun.github.io/biobrain/", preview:"previews/biobrain.jpg",
                         desc:"A spiking neural network powered by a glucose biofuel cell, with a regulator that scales its firing rate to the charge left in a supercapacitor, so it slows down instead of failing. The whole simulation runs live in the browser as a faithful port of a Python reference implementation, comparing four energy policies with bootstrap confidence intervals and sweeping the tuning cliff.",
                         tags:["Neuromorphic","Spiking Networks","Simulation","JavaScript"], links:[{label:"Live ↗",url:"https://sanjana-sun.github.io/biobrain/"},{label:"Code ↗",url:"https://github.com/Sanjana-sun/biobrain"}] },
